@@ -1,166 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BlueMind AI & Consultancy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quickstep AI</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- AOS Animation Library -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* Variables */
+    :root {
+      --primary: #007bff;
+      --light-blue: #e6f2ff;
+      --white: #ffffff;
+      --dark: #333333;
+      --font: 'Inter', sans-serif;
     }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #333;
-      line-height: 1.6;
-      overflow-x: hidden;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--dark); }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      width: 100%; height: 100%;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
     }
-    header {
-      background: linear-gradient(135deg, #0077cc, #005fa3);
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      animation: fadeIn 2s ease-in;
+    .spinner {
+      width: 50px; height: 50px;
+      border: 6px solid var(--light-blue);
+      border-top: 6px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-    header img {
-      width: 80px;
-      margin-bottom: 1rem;
-      animation: rotateIn 1.5s ease-out;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      background-color: #004f85;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #a4d4f4;
-    }
-    section {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-      animation: fadeInUp 1.5s ease-out;
-    }
-    section h2 {
-      color: #0077cc;
-      margin-bottom: 1rem;
-      font-size: 2rem;
-    }
-    ul li {
-      margin: 0.5rem 0;
-    }
-    footer {
-      background-color: #0077cc;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    .cta-button {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #0077cc;
-      color: white;
-      text-decoration: none;
-      border-radius: 30px;
-      margin-top: 1rem;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-    .cta-button:hover {
-      background-color: #005fa3;
-    }
-    .hero-bg {
-      background-image: url('https://via.placeholder.com/1600x400/0077cc/ffffff?text=AI+Innovation');
-      background-size: cover;
-      background-position: center;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 2rem;
-      font-weight: 800;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-      animation: zoomIn 1.5s ease-in-out;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Navbar */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.3s;
+      z-index: 100;
     }
+    header.scrolled { background: rgba(0, 123, 255, 0.95); }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    nav .nav-links {
+      display: flex; gap: 30px;
+    }
+    nav .nav-links a {
+      text-decoration: none; color: var(--dark); font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav .nav-links a:hover { color: var(--primary); }
+    .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav .nav-links {
+        position: absolute; top: 70px; right: 0;
+        background: var(--primary); flex-direction: column;
+        width: 200px; padding: 20px; display: none;
+      }
+      nav .nav-links.active { display: flex; }
+      nav .nav-links a { color: var(--white); margin: 10px 0; }
+    }
+
+    /* Hero */
+    #home {
+      height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; color: var(--white);
+      background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 60%);
+      animation: move 10s linear infinite;
+    }
+    @keyframes move {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-content h1 {
+      font-size: 3rem; margin-bottom: 20px;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .hero-content p {
+      font-size: 1.2rem; margin-bottom: 30px;
+      animation: fadeInUp 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+    .hero-content .btn {
+      padding: 12px 30px; margin: 0 10px;
+      border: none; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: transform 0.2s;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.6s forwards;
+    }
+    .btn-primary { background: var(--white); color: var(--primary); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
+    .btn:hover { transform: scale(1.05); }
+
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes rotateIn {
-      from { transform: rotate(-360deg); opacity: 0; }
-      to { transform: rotate(0); opacity: 1; }
+
+    /* Sections */
+    section { padding: 100px 40px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Solutions */
+    #solutions .cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
     }
-    @keyframes zoomIn {
-      from { transform: scale(1.1); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .card {
+      background: var(--white); padding: 30px; border-radius: 12px;
+      text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
+    .card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+    .card h3 { margin-bottom: 15px; font-size: 1.3rem; }
+    .card p { font-size: 0.95rem; line-height: 1.5; }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    /* About */
+    #about .about-wrapper { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+    #about img { max-width: 500px; flex: 1; border-radius: 12px; }
+    #about .about-text { flex: 1; }
+    .counters { display: flex; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+    .counter {
+      text-align: center; flex: 1;
+    }
+    .counter h2 { font-size: 2.5rem; color: var(--primary); }
+    .counter p { margin-top: 10px; font-size: 1rem; }
+
+    /* Testimonials */
+    #testimonials .testimonial {
+      max-width: 700px; margin: 0 auto; text-align: center;
+      opacity: 0; transition: opacity 0.5s;
+    }
+    #testimonials .testimonial.active { opacity: 1; }
+    .testimonial p { font-style: italic; margin-bottom: 15px; }
+    .testimonial .author { font-weight: 600; }
+
+    /* Contact */
+    #contact .contact-wrapper { display: flex; gap: 40px; flex-wrap: wrap; }
+    #contact form { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    #contact input, #contact textarea {
+      padding: 12px; border: 1px solid #ccc; border-radius: 6px;
+      font-size: 1rem; width: 100%; font-family: var(--font);
+    }
+    #contact button { width: fit-content; align-self: flex-start;
+      padding: 12px 30px; border: none; border-radius: 50px;
+      background: var(--primary); color: var(--white);
+      cursor: pointer; transition: transform 0.2s;
+    }
+    #contact button:hover { transform: scale(1.05); }
+    #contact .success { color: green; font-weight: 600; display: none; }
+    #contact .map-container { flex: 1; }
+    #contact iframe { width: 100%; height: 300px; border: none; border-radius: 12px; }
+
+    /* Back to Top */
+    #backToTop {
+      position: fixed; bottom: 30px; right: 30px;
+      background: var(--primary); color: var(--white);
+      border: none; padding: 12px; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer; display: none;
+      z-index: 100;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary); color: var(--white);
+      padding: 60px 40px;
+    }
+    .footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+    .footer-cols h4 { margin-bottom: 20px; }
+    .footer-cols ul { list-style: none; }
+    .footer-cols ul li { margin-bottom: 10px; }
+    .footer-cols ul li a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+    .footer-cols ul li a:hover { color: var(--light-blue); }
+    .social-icons a { margin-right: 15px; font-size: 1.2rem; color: var(--white); transition: color 0.2s; }
+    .social-icons a:hover { color: var(--light-blue); }
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://via.placeholder.com/80x80.png?text=BM" alt="BlueMind Logo">
-    <h1>BlueMind AI & Consultancy</h1>
-    <p>Empowering your business with AI-driven solutions</p>
-  </header>
-
-  <div class="hero-bg">
-    Elevate with Intelligence
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
   </div>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <!-- Navbar -->
+  <header id="header">
+    <div class="logo"><i class="fas fa-bolt"></i> Quickstep AI</div>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    <nav>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#about">About</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
 
+  <!-- Hero Section -->
+  <section id="home">
+    <div class="hero-content">
+      <h1>Accelerate Your Business with the Power of AI</h1>
+      <p>Quickstep AI builds intelligent systems to drive smarter decisions and faster growth.</p>
+      <button class="btn btn-primary">Get Started</button>
+      <button class="btn btn-outline">View Solutions</button>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions">
+    <div class="container" data-aos="fade-up">
+      <h2 class="section-title" style="text-align:center; margin-bottom:60px;">Our Solutions</h2>
+      <div class="cards">
+        <div class="card" data-aos="zoom-in">
+          <i class="fas fa-chart-line"></i>
+          <h3>Predictive Analytics</h3>
+          <p>Leverage data-driven insights to forecast trends and optimize performance across all business functions.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="100">
+          <i class="fas fa-robot"></i>
+          <h3>AI-Powered Automation</h3>
+          <p>Automate repetitive tasks and workflows, freeing up your team to focus on strategic initiatives.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="200">
+          <i class="fas fa-code"></i>
+          <h3>Custom AI Integrations</h3>
+          <p>Seamlessly integrate AI capabilities into your existing systems for a tailored, high-impact solution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
   <section id="about">
-    <h2>About Us</h2>
-    <p>
-      At BlueMind, we combine cutting-edge artificial intelligence with expert consulting to help businesses solve complex problems, optimize operations, and unlock new opportunities. Our team of AI experts and strategic advisors bring experience across industries.
-    </p>
-    <img src="https://via.placeholder.com/800x300.png?text=AI+Solutions" alt="AI Solutions" style="width:100%; margin-top:1.5rem; border-radius: 12px;">
+    <div class="container about-wrapper">
+      <img src="https://via.placeholder.com/500x350" alt="Quickstep AI"> 
+      <div class="about-text" data-aos="fade-left">
+        <h2>Why Quickstep?</h2>
+        <p>At Quickstep AI, we believe that speed, intelligence, and precision define the future. Our mission is to help businesses harness AI without complexity.</p>
+        <div class="counters">
+          <div class="counter">
+            <h2 data-target="120">0</h2>
+            <p>Successful Projects</p>
+          </div>
+          <div class="counter">
+            <h2 data-target="98">0</h2>
+            <p>Client Satisfaction (%)</p>
+          </div>
+          <div class="counter">
+            <h2 data-target="2">0</h2>
+            <p>Avg Deployment Time (Months)</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="services">
-    <h2>Our Services</h2>
-    <ul>
-      <li>AI Strategy and Roadmapping</li>
-      <li>Custom AI Solutions Development</li>
-      <li>Machine Learning Model Training and Deployment</li>
-      <li>Data Analysis and Business Intelligence</li>
-      <li>Workshops and Executive Training</li>
-    </ul>
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center; margin-bottom:60px;">Testimonials</h2>
+      <div class="testimonial" data-index="0">
+        <p>"Quickstep AI transformed how we operate—our productivity doubled in just 3 months."</p>
+        <div class="author">— Maria Lopez, COO of Inventix</div>
+      </div>
+      <div class="testimonial" data-index="1">
+        <p>"Their predictive analytics gave us insights we never knew existed."</p>
+        <div class="author">— John Smith, CEO of NovaCorp</div>
+      </div>
+      <div class="testimonial" data-index="2">
+        <p>"The team was professional and delivered beyond expectations."</p>
+        <div class="author">— Aisha Khan, Head of Ops at TechWave</div>
+      </div>
+    </div>
   </section>
 
+  <!-- Contact Section -->
   <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email us at <a href="mailto:contact@bluemind.ai">contact@bluemind.ai</a></p>
-    <p>Or schedule a consultation today!</p>
-    <a class="cta-button" href="mailto:contact@bluemind.ai">Book a Consultation</a>
+    <div class="container" data-aos="fade-up">
+      <h2 class="section-title" style="text-align:center; margin-bottom:60px;">Get in Touch</h2>
+      <div class="contact-wrapper">
+        <form id="contactForm">
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <textarea rows="5" placeholder="Message" required></textarea>
+          <button type="submit">Send Message</button>
+          <div class="success">Thank you! Your message has been sent.</div>
+        </form>
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019019234868!2d-122.419415!3d37.774929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085814dca3d1eee%3A0xf7c8d9e1b4c9f0c3!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1617749735683" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- Back to Top Button -->
+  <button id="backToTop"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2025 BlueMind AI & Consultancy. All rights reserved.</p>
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <h4>About Quickstep</h4>
+          <p>Quickstep AI empowers businesses with smart, scalable AI solutions to accelerate growth and drive innovation.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter-square"></i></a>
+            <a href="#"><i class="fab fa-facebook-square"></i></a>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:40px;">&copy; 2025 Quickstep AI. All rights reserved.</p>
+    </div>
   </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      document.getElementById('loader').style.display = 'none';
+    });
+
+    // AOS Init
+    AOS.init({ once: true });
+
+    // Navbar background on scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('nav .nav-links');
+    menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+    // Counters animation
+    const counters = document.querySelectorAll('.counter h2');
+    const speed = 200;
+    const animateCounters = () => {
+      counters.forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = Math.ceil(target / speed);
+          if (count < target) {
+            counter.innerText = count + increment;
+            setTimeout(updateCount, 20);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        updateCount();
+      });
+    };
+    let counted = false;
+    window.addEventListener('scroll', () => {
+      const aboutSection = document.getElementById('about');
+      if (!counted && window.scrollY > aboutSection.offsetTop - window.innerHeight / 2) {
+        animateCounters(); counted = true;
+      }
+    });
+
+    // Testimonials carousel
+    const testimonials = document.querySelectorAll('#testimonials .testimonial');
+    let currentTestimonial = 0;
+    const showTestimonial = index => {
+      testimonials.forEach(t => t.classList.remove('active'));
+      testimonials[index].classList.add('active');
+    };
+    showTestimonial(0);
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
+
+    // Contact form
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      form.querySelector('.success').style.display = 'block';
+      form.reset();
+    });
+
+    // Back to Top
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
 </body>
 </html>
