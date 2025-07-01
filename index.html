@@ -440,7 +440,7 @@
     }, 5000);
 
     // EmailJS init
-    emailjs.init('YOUR_EMAILJS_USER_ID');
+    emailjs.init('HlnYIoVp37HCcQnlM');
 
     // Contact form submission
     const form = document.getElementById('contactForm');
@@ -448,7 +448,7 @@
       e.preventDefault();
       const btn = form.querySelector('button');
       btn.disabled = true; btn.innerText = 'Sending...';
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      emailjs.send('service_pgoz1u4', 'template_vm4iy36', {
         from_name: this.from_name.value,
         reply_to: this.reply_to.value,
         message: this.message.value
