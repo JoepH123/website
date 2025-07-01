@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BlueMind AI & Consultancy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,45 +12,62 @@
       box-sizing: border-box;
     }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: #ffffff;
       color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
     header {
-      background-color: #0077cc;
+      background: linear-gradient(135deg, #0077cc, #005fa3);
       color: white;
-      padding: 2rem;
+      padding: 3rem 2rem;
       text-align: center;
+      animation: fadeIn 2s ease-in;
+    }
+    header img {
+      width: 80px;
+      margin-bottom: 1rem;
+      animation: rotateIn 1.5s ease-out;
     }
     nav {
       display: flex;
       justify-content: center;
       gap: 2rem;
-      background-color: #005fa3;
+      background-color: #004f85;
       padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav a {
       color: white;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: color 0.3s ease;
     }
     nav a:hover {
-      text-decoration: underline;
+      color: #a4d4f4;
     }
     section {
       padding: 4rem 2rem;
       max-width: 1000px;
       margin: auto;
+      animation: fadeInUp 1.5s ease-out;
     }
     section h2 {
       color: #0077cc;
       margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    ul li {
+      margin: 0.5rem 0;
     }
     footer {
       background-color: #0077cc;
       color: white;
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
     }
     .cta-button {
       display: inline-block;
@@ -57,19 +75,57 @@
       background-color: #0077cc;
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 30px;
       margin-top: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
     }
     .cta-button:hover {
       background-color: #005fa3;
+    }
+    .hero-bg {
+      background-image: url('https://via.placeholder.com/1600x400/0077cc/ffffff?text=AI+Innovation');
+      background-size: cover;
+      background-position: center;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: 800;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+      animation: zoomIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes rotateIn {
+      from { transform: rotate(-360deg); opacity: 0; }
+      to { transform: rotate(0); opacity: 1; }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(1.1); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
   <header>
+    <img src="https://via.placeholder.com/80x80.png?text=BM" alt="BlueMind Logo">
     <h1>BlueMind AI & Consultancy</h1>
     <p>Empowering your business with AI-driven solutions</p>
   </header>
+
+  <div class="hero-bg">
+    Elevate with Intelligence
+  </div>
 
   <nav>
     <a href="#about">About</a>
@@ -82,6 +138,7 @@
     <p>
       At BlueMind, we combine cutting-edge artificial intelligence with expert consulting to help businesses solve complex problems, optimize operations, and unlock new opportunities. Our team of AI experts and strategic advisors bring experience across industries.
     </p>
+    <img src="https://via.placeholder.com/800x300.png?text=AI+Solutions" alt="AI Solutions" style="width:100%; margin-top:1.5rem; border-radius: 12px;">
   </section>
 
   <section id="services">
