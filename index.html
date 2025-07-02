@@ -449,9 +449,9 @@
       const btn = form.querySelector('button');
       btn.disabled = true; btn.innerText = 'Sending...';
       emailjs.send('service_pgoz1u4', 'template_vm4iy36', {
-        from_name: this.from_name.value,
-        reply_to: this.reply_to.value,
-        message: this.message.value
+        name:    this.from_name.value,   // must match {{name}}
+        email:   this.reply_to.value,    // must match {{email}}
+        message: this.message.value      // already matches {{message}}
       }).then(() => {
         btn.innerText = 'Sent!';
         form.querySelector('.success').classList.add('show');
