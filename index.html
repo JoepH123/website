@@ -50,29 +50,30 @@
     }
 
     /* Navbar */
-    /* header {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      transition: background 0.3s; z-index: 100;
-    } */
     header#header {
-      background: linear-gradient(
-        270deg,
-        #007bff,
-        #00c6ff,
-        #009dff
-      );
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 100;
+
+      /* animated gradient */
+      background: linear-gradient(270deg, #007bff, #00c6ff, #009dff);
       background-size: 600% 600%;
       animation: gradientBG 15s ease infinite;
-      transition: background 0.3s; /* keeps your scroll state tweak */
+
+      transition: background-color 0.3s;
     }
-    header.scrolled { background: rgba(0, 123, 255, 0.95); }
+    header#header.scrolled {
+      background: rgba(0, 123, 255, 0.95);
+      animation: none;
+    }
     .logo-img { height: 40px; }
     nav .nav-links { display: flex; gap: 30px; }
     nav .nav-links a {
-      text-decoration: none; color: var(--white);
-      font-weight: 600; transition: color 0.2s;
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 600;
+      transition: color 0.2s;
     }
     nav .nav-links a:hover { color: var(--primary); }
     .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
