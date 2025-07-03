@@ -86,7 +86,8 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: 1;
+      z-index: 0;  /* Make sure it's behind .hero-content but not hidden */
+      pointer-events: none; /* Allows mouse interaction to pass through */
     }
     /* Ensure your text stays on top */
     .hero-content {
@@ -478,29 +479,31 @@
   <!-- tsparticles library -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles"></script>
   <script>
-    tsParticles.load("tsparticles", {
-      fpsLimit: 60,
-      interactivity: {
-        detectsOn: "canvas",
-        events: {
-          onHover: { enable: true, mode: "repulse" },
-          onClick: { enable: true, mode: "push" },
+    window.addEventListener('load', () => {
+      tsParticles.load("tsparticles", {
+        fpsLimit: 60,
+        interactivity: {
+          detectsOn: "canvas",
+          events: {
+            onHover: { enable: true, mode: "repulse" },
+            onClick: { enable: true, mode: "push" },
+          },
+          modes: {
+            repulse: { distance: 100 },
+            push:   { quantity: 4 }
+          }
         },
-        modes: {
-          repulse: { distance: 100 },
-          push:   { quantity: 4 }
-        }
-      },
-      particles: {
-        number:      { value: 50, density: { enable: true, value_area: 800 } },
-        color:       { value: "#ffffff" },
-        shape:       { type: "circle" },
-        opacity:     { value: 0.5, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
-        size:        { value: 3, random: true },
-        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.3, width: 1 },
-        move:        { enable: true, speed: 2, direction: "none", outMode: "bounce" }
-      },
-      retina_detect: true
+        particles: {
+          number:      { value: 50, density: { enable: true, value_area: 800 } },
+          color:       { value: "#ffffff" },
+          shape:       { type: "circle" },
+          opacity:     { value: 0.5, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+          size:        { value: 3, random: true },
+          line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.3, width: 1 },
+          move:        { enable: true, speed: 2, direction: "none", outMode: "bounce" }
+        },
+        retina_detect: true
+      });
     });
   </script>
 </body>
