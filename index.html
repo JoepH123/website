@@ -11,8 +11,7 @@
   <style>
     /* Variables */
     :root {
-      --primary: #007bff;
-      /* --primary: rgba(0, 133, 255, 0.9); */
+      --primary: rgba(0, 133, 255, 0.9);
       --light-blue: #e6f2ff;
       --white: #ffffff;
       --dark: #333333;
@@ -47,7 +46,7 @@
       justify-content: space-between;
       transition: background 0.3s; z-index: 100;
     }
-    header.scrolled { background: rgba(0, 133, 255, 0.9); }
+    header.scrolled { background: var(--primary); }
 
     /* make the logo container flex */
     .logo {
@@ -81,7 +80,7 @@
       .menu-toggle { display: block; }
       nav .nav-links {
         position: absolute; top: 70px; right: 0;
-        background: rgba(0, 133, 255, 0.9); flex-direction: column;
+        background: var(--primary); flex-direction: column;
         width: 200px; padding: 20px; display: none;
       }
       nav .nav-links.active { display: flex; }
