@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com/dist/email.min.js"></script>
+  <script src="https://kit.fontawesome.com/yourkit.js"></script>
   <style>
     /* Variables */
     :root {
@@ -205,7 +206,8 @@
     }
 
     /* Footer */
-    footer {
+
+    /* footer {
       background: var(--primary); color: var(--white);
       padding: 60px 40px;
     }
@@ -226,7 +228,38 @@
       margin-right: 15px; font-size: 1.2rem;
       color: var(--white); transition: color 0.2s;
     }
-    .social-icons a:hover { color: var(--light-blue); }
+    .social-icons a:hover { color: var(--light-blue); } */
+    
+    .footer-cols {
+      display: block;
+      text-align: center;     /* center the list and the copyright */
+      padding-bottom: 20px;    /* optional spacing */
+    }
+    /* Keep your social-icons styles */
+    .footer-cols .social-icons {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;           /* center the UL within the footer */
+      display: inline-block;    /* shrink-wrap to its contents */
+    }
+    .footer-cols .social-icons li {
+      margin: 8px 0;
+    }
+    .footer-cols .social-icons li a {
+      display: inline-flex;
+      align-items: center;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-cols .social-icons li a i {
+      font-size: 1.25rem;
+      margin-right: 8px;
+    }
+    .footer-cols .social-icons li a:hover {
+      color: var(--light-blue);
+    }
   </style>
 </head>
 <body>
@@ -409,13 +442,13 @@
             <li>
               <a href="https://nl.linkedin.com/in/stijn-diemel" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-linkedin"></i>
-                John Doe
+                Stijn Diemel
               </a>
             </li>
             <li>
               <a href="https://nl.linkedin.com/in/joep-hillenaar-6ab651279" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-linkedin"></i>
-                Jane Smith
+                Joep Hillenaar
               </a>
             </li>
           </ul>
