@@ -4,13 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quickstep AI</title>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- AOS Animation Library -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-  <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com/dist/email.min.js"></script>
   <style>
     /* Variables */
@@ -72,28 +68,28 @@
 
     /* Hero */
     #home {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      background: #007bff;
+      height: 100vh; display: flex;
+      align-items: center; justify-content: center;
+      text-align: center; position: relative;
+      color: var(--white);
+      background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    /* Particles canvas */
-    #tsparticles {
+    /* This removes the original radial gradient animation as Particles.js will handle the background effect */
+    #home::before {
+      content: none;
+    }
+
+    /* Particles.js container styling */
+    #particles-js {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;  /* Make sure it's behind .hero-content but not hidden */
-      pointer-events: none; /* Allows mouse interaction to pass through */
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0; /* Ensure particles are behind content */
     }
-    /* Ensure your text stays on top */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
+
     .hero-content { position: relative; z-index: 1; max-width: 800px; }
     .hero-content h1, .hero-content p, .hero-content .btn {
       opacity: 0; transform: translateY(20px);
@@ -234,12 +230,10 @@
   </style>
 </head>
 <body>
-  <!-- Loader -->
   <div id="loader">
     <div class="spinner"></div>
   </div>
 
-  <!-- Navbar -->
   <header id="header">
     <div class="logo">
       <img src="logo.png" alt="Quickstep AI Logo" class="logo-img">
@@ -256,10 +250,8 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
   <section id="home">
-    <div id="tsparticles"></div>
-    <div class="hero-content">
+    <div id="particles-js"></div> <div class="hero-content">
       <h1>Accelerate Your Business with the Power of AI</h1>
       <p>Quickstep AI builds intelligent systems to drive smarter decisions and faster growth.</p>
       <button class="btn btn-primary">Get Started</button>
@@ -267,7 +259,6 @@
     </div>
   </section>
 
-  <!-- Solutions Section -->
   <section id="solutions">
     <div class="container" data-aos="fade-up">
       <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Our Solutions</h2>
@@ -291,7 +282,6 @@
     </div>
   </section>
 
-  <!-- About Section -->
   <section id="about">
     <div class="container about-wrapper">
       <img src="https://via.placeholder.com/500x350" alt="Quickstep AI Illustration">
@@ -316,7 +306,6 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
   <section id="testimonials">
     <div class="container">
       <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Testimonials</h2>
@@ -335,7 +324,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section id="contact">
     <div class="container" data-aos="fade-up">
       <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Get in Touch</h2>
@@ -351,10 +339,8 @@
     </div>
   </section>
 
-  <!-- Back to Top Button -->
   <button id="backToTop"><i class="fas fa-chevron-up"></i></button>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-cols">
@@ -384,8 +370,8 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
     // Loader
     window.addEventListener('load', () => {
@@ -456,9 +442,9 @@
       const btn = form.querySelector('button');
       btn.disabled = true; btn.innerText = 'Sending...';
       emailjs.send('service_pgoz1u4', 'template_vm4iy36', {
-        name:    this.from_name.value,   // must match {{name}}
-        email:   this.reply_to.value,    // must match {{email}}
-        message: this.message.value      // already matches {{message}}
+        name:    this.from_name.value,
+        email:   this.reply_to.value,
+        message: this.message.value
       }).then(() => {
         btn.innerText = 'Sent!';
         form.querySelector('.success').classList.add('show');
@@ -475,41 +461,117 @@
       backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
     });
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  </script>
-  
-  <!-- tsparticles library -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles"></script>
-  <script>
-    window.addEventListener('load', () => {
-      // Import the loadFull function
-      const { loadFull } = tsParticles; 
 
-      loadFull(tsParticles).then(() => { // Initialize tsParticles instance
-        tsParticles.load("tsparticles", {
-          fpsLimit: 60,
-          interactivity: {
-            detectsOn: "canvas",
-            events: {
-              onHover: { enable: true, mode: "repulse" },
-              onClick: { enable: true, mode: "push" },
-            },
-            modes: {
-              repulse: { distance: 100 },
-              push:   { quantity: 4 }
+    // Particles.js initialization
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff" // White particles
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff", // White lines
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 1
             }
           },
-          particles: {
-            number:      { value: 50, density: { enable: true, value_area: 800 } },
-            color:       { value: "#ffffff" },
-            shape:       { type: "circle" },
-            opacity:     { value: 0.5, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
-            size:        { value: 3, random: true },
-            line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.3, width: 1 },
-            move:        { enable: true, speed: 2, direction: "none", outMode: "bounce" }
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
           },
-          retina_detect: true
-        });
-      });
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
     });
   </script>
 </body>
