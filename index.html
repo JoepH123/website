@@ -43,12 +43,29 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    @keyframes gradientBG {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     /* Navbar */
-    header {
+    /* header {
       position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px;
       display: flex; align-items: center;
       justify-content: space-between;
       transition: background 0.3s; z-index: 100;
+    } */
+    header#header {
+      background: linear-gradient(
+        270deg,
+        #007bff,
+        #00c6ff,
+        #009dff
+      );
+      background-size: 600% 600%;
+      animation: gradientBG 15s ease infinite;
+      transition: background 0.3s; /* keeps your scroll state tweak */
     }
     header.scrolled { background: rgba(0, 123, 255, 0.95); }
     .logo-img { height: 40px; }
