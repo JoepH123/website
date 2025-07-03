@@ -165,7 +165,18 @@
       display: flex; align-items: center;
       gap: 40px; flex-wrap: wrap;
     }
-    #about .about-img { max-height: 200px; flex: 1; border-radius: 12px; }
+    #about .about-img {
+      /* constrain the height */
+      max-height: 200px;
+      /* don’t let flex stretch the width: */
+      flex: 0 0 auto;
+      /* allow width to size itself to preserve aspect ratio */
+      width: auto;
+      height: auto;
+      /* if you want it to cover its box or contain inside it */
+      object-fit: contain; /* or “cover” */
+      border-radius: 12px;
+    }
     #about .about-text { flex: 1; }
     .counters { display: flex; gap: 40px;
       margin-top: 30px; flex-wrap: wrap;
