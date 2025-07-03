@@ -462,7 +462,7 @@
     });
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Particles.js initialization
+    // Particles.js initialization with no continuous movement
     particlesJS('particles-js', {
       "particles": {
         "number": {
@@ -518,7 +518,7 @@
           "width": 1
         },
         "move": {
-          "enable": true,
+          "enable": false, // *** KEY CHANGE: Disable continuous movement ***
           "speed": 6,
           "direction": "none",
           "random": false,
@@ -537,11 +537,11 @@
         "events": {
           "onhover": {
             "enable": true,
-            "mode": "grab"
+            "mode": "grab" // Particles respond to hover
           },
           "onclick": {
             "enable": true,
-            "mode": "push"
+            "mode": "push" // Particles respond to click
           },
           "resize": true
         },
