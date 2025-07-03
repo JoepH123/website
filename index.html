@@ -48,7 +48,28 @@
       transition: background 0.3s; z-index: 100;
     }
     header.scrolled { background: rgba(0, 123, 255, 0.95); }
-    .logo-img { height: 40px; }
+    
+    /* make the logo container flex */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;            /* space between image and text */
+    }
+
+    /* increase the logo image size */
+    .logo-img {
+      height: 50px;         /* or whatever height you prefer */
+      width: auto;          /* maintain aspect ratio */
+    }
+
+    /* style the text */
+    .logo-text {
+      font-size: 1.5rem;    /* adjust for your taste */
+      font-weight: 700;
+      color: var(--white);  /* or var(--primary) if you want blue text */
+      font-family: var(--font);
+    }
+
     nav .nav-links { display: flex; gap: 30px; }
     nav .nav-links a {
       text-decoration: none; color: var(--white);
@@ -229,7 +250,7 @@
       color: var(--white); transition: color 0.2s;
     }
     .social-icons a:hover { color: var(--light-blue); } */
-    
+
     .footer-cols {
       display: block;
       text-align: center;     /* center the list and the copyright */
@@ -270,6 +291,7 @@
   <header id="header">
     <div class="logo">
       <img src="./images/temp_logo_white1.png" alt="Quickstep AI Logo" class="logo-img">
+      <span class="logo-text">Quickstep AI</span>
     </div>
     <div class="menu-toggle"><i class="fas fa-bars"></i></div>
     <nav>
