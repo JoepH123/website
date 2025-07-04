@@ -621,10 +621,6 @@
   </section>
 
   <div id="waarom-wrapper">
-    <div class="container">
-      <h2 class="section-title">Waarom Quickstep AI?</h2>
-    </div>
-
     <section class="horizontal-scroll-section" id="waarom-horizontal">
         <div class="horizontal-scroll-container">
             <div class="horizontal-content-wrapper">
@@ -930,69 +926,22 @@
       "retina_detect": true
     });
 
-    // Horizontal Scroll Logic for #waarom-horizontal section
-    document.addEventListener('DOMContentLoaded', () => {
-        const horizontalSection = document.getElementById('waarom-horizontal');
-        if (!horizontalSection) return;
+    // Waarom-panel scroll mapping
+    (function() {
+      const wrapper = document.getElementById('waarom-wrapper');
+      const panels = document.querySelector('.content-panels');
+      const totalScrollHeight = wrapper.scrollHeight - window.innerHeight;
 
-        const horizontalContainer = horizontalSection.querySelector('.horizontal-scroll-container');
-        const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper');
-        const panels = Array.from(horizontalContentWrapper.children);
-
-        let scrollDistance = 0;
-
-        const calculateDimensions = () => {
-            // Calculate the total scrollable width of the content wrapper
-            // This includes the actual content and any padding/gaps
-            const contentWidth = horizontalContentWrapper.scrollWidth;
-            // The distance we need to scroll horizontally is the contentWidth minus the viewport width
-            // that the sticky container occupies (which is 100vw or window.innerWidth)
-            scrollDistance = contentWidth - window.innerWidth;
-            if (scrollDistance < 0) scrollDistance = 0; // Ensure it's not negative
-        };
-
-        calculateDimensions(); // Initial calculation
-
-        window.addEventListener('scroll', () => {
-            // Only activate on larger screens where horizontal scroll is desired
-            if (window.innerWidth <= 992) {
-                horizontalContentWrapper.style.transform = `translateX(0px)`;
-                return;
-            }
-
-            const sectionTop = horizontalSection.offsetTop;
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-
-            // The vertical scroll range that drives the horizontal movement
-            // It starts when the sticky container hits the top (sectionTop)
-            // It ends when the vertical scroll has covered the equivalent of the horizontal scroll distance.
-            // We make the vertical scroll range equal to the horizontal scroll distance in pixels for a 1:1 feel.
-            // Or, more simply, the height of `horizontal-scroll-section` minus `100vh` (because it's sticky for 100vh)
-            // defines the vertical scroll range that maps to the horizontal scroll.
-
-            // The horizontalSection has a height of 200vh.
-            // The first 100vh is for scrolling *to* the sticky point.
-            // The next 100vh is the actual scroll range for horizontal movement.
-            const horizontalScrollStart = sectionTop; // When the horizontal-scroll-section starts to enter viewport
-            const horizontalScrollEnd = sectionTop + (horizontalSection.offsetHeight - windowHeight); // When the sticky part should finish its horizontal movement
-
-            if (scrollY >= horizontalScrollStart && scrollY <= horizontalScrollEnd) {
-                // Calculate progress within this specific vertical scroll range
-                const scrollProgress = (scrollY - horizontalScrollStart) / (horizontalScrollEnd - horizontalScrollStart);
-                const translateX = -scrollProgress * scrollDistance;
-                horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
-            } else if (scrollY < horizontalScrollStart) {
-                // Before the horizontal scroll section
-                horizontalContentWrapper.style.transform = `translateX(0px)`;
-            } else if (scrollY > horizontalScrollEnd) {
-                // After the horizontal scroll section
-                horizontalContentWrapper.style.transform = `translateX(-${scrollDistance}px)`;
-            }
-        });
-
-        window.addEventListener('resize', calculateDimensions);
-    });
+      window.addEventListener('scroll', () => {
+        const rect = wrapper.getBoundingClientRect();
+        // only run while wrapper is in viewport
+        if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+          const progress = Math.min(1, Math.abs(rect.top) / totalScrollHeight);
+          const translateY = progress * (panels.scrollHeight - wrapper.clientHeight);
+          panels.style.transform = `translateY(-${translateY}px)`;
+        }
+      });
+    })();
 
   </script>
 </body>
