@@ -244,7 +244,8 @@ section {
 /* --- "WHY US" (WAAROM) HORIZONTAL SCROLL SECTION --- */
 #waarom-wrapper {
   background: var(--white);
-  padding-top: 70px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 .horizontal-scroll-section {
   padding: 0;
@@ -286,24 +287,6 @@ section {
   padding: 40px;
   box-sizing: border-box;
 }
- /* .horizontal-content-wrapper {
-  display: flex;
-  height: 100%;
-  will-change: transform;
-  transition: transform 0.1s ease-out;
-  width: max-content; 
-}
-.horizontal-panel {
-  flex: 0 0 auto;                 
-  width: calc(100vw - 80px);    
-  max-width: 800px;             
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  box-sizing: border-box;
-} */
 .horizontal-panel .content-wrapper {
   display: flex;
   flex-direction: column;
