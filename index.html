@@ -176,10 +176,6 @@
     }
 
     /* Waarom Quickstep - Horizontal Scroll Section */
-    /* #waarom-horizontal {
-      padding: 0;
-    } */
-
     #waarom-wrapper {
       background: var(--white);
       padding: 0; /* Remove padding from wrapper */
@@ -194,7 +190,6 @@
     .waarom-container {
       position: sticky;
       top: 0;
-      /* height: 100vh; */
       width: 100%;
       display: flex;
       align-items: center;
@@ -215,7 +210,6 @@
     .fixed-illustration {
       max-height: 500px;
       width: auto;
-      /* height: auto; */
       object-fit: contain;
       border-radius: 12px;
     }
@@ -233,18 +227,13 @@
       height: 100%;
       will-change: transform;
       transition: transform 0.1s ease-out; /* Smooth transition */
-      /* Initially position the first panel in the center */
-      justify-content: center; /* Center the entire wrapper */
-      width: 200vw; /* Accommodate two 100vw panels */
+      width: 200%; /* Make it twice the width of its parent window */
     }
-    /* This will initially shift the content wrapper so the first panel is centered */
-    /* Needs to be managed by JS for accurate centering relative to the viewport width */
-
 
     .horizontal-panel {
       flex-shrink: 0;
-      width: 100vw; /* Each panel takes full viewport width */
-      max-width: 800px; /* But limit max width for readability */
+      width: 100%; /* Each panel takes full width of scrollable-content-window */
+      max-width: 800px; /* Still limit max width for readability */
       height: 100%;
       display: flex;
       align-items: center;
@@ -996,29 +985,33 @@
       const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper');
       const panels = horizontalSection.querySelectorAll('.horizontal-panel');
       const waaromContainer = horizontalSection.querySelector('.waarom-container');
+      const scrollableContentWindow = horizontalSection.querySelector('.scrollable-content-window'); // Get this element
       
-      if (!horizontalContentWrapper || panels.length < 2) return; // Need at least two panels
+      if (!horizontalContentWrapper || panels.length < 2 || !scrollableContentWindow) return; // Need at least two panels and the content window
 
-      let panelWidth = 0;
-      let initialTranslateX = 0;
+      let panelEffectiveWidth = 0; // This will be the actual rendered width of one panel
+      let initialTranslateX = 0;   // Translation to center the first panel
 
       const calculateScrollDistance = () => {
         if (window.innerWidth > 992) {
-          // Get the width of one panel (assuming all panels have equal effective width)
-          // Use clientWidth of the parent container to determine the effective "center"
-          panelWidth = waaromContainer.offsetWidth; 
+          // The effective width of a panel is its offsetWidth, considering max-width and parent constraints
+          panelEffectiveWidth = panels[0].offsetWidth;
+
+          // The 'viewport' for the panels is the scrollable-content-window
+          const viewportWidth = scrollableContentWindow.offsetWidth;
           
-          // The initial position to center the first panel.
-          // This ensures the left edge of the first panel is at (containerWidth - panelWidth) / 2
-          // No, it should be -((total width of panels - viewport width) / 2)
-          // For two panels, total width is 2 * panelWidth
-          initialTranslateX = (waaromContainer.offsetWidth - panels[0].offsetWidth) / 2;
-          // Set initial transform to center the first panel
+          // Calculate initial translateX to center the first panel within its viewport
+          // The horizontalContentWrapper starts at 0. We need to shift it right
+          // so that the center of the first panel aligns with the center of the viewport.
+          initialTranslateX = (viewportWidth - panelEffectiveWidth) / 2;
+          
+          // Set initial transform for the horizontalContentWrapper
           horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
-          horizontalContentWrapper.style.justifyContent = 'flex-start'; // Disable flex centering if JS takes over
+          horizontalContentWrapper.style.justifyContent = 'flex-start'; // Important: Disable flex centering if JS takes over
 
         } else {
-          panelWidth = 0;
+          // Reset for mobile
+          panelEffectiveWidth = 0;
           initialTranslateX = 0;
           horizontalContentWrapper.style.transform = 'translateX(0px)';
           horizontalContentWrapper.style.justifyContent = 'center'; // Re-enable CSS centering for mobile
@@ -1029,43 +1022,40 @@
       calculateScrollDistance();
 
       window.addEventListener('scroll', () => {
-        if (window.innerWidth <= 992 || panelWidth === 0) {
+        if (window.innerWidth <= 992 || panelEffectiveWidth === 0) {
           horizontalContentWrapper.style.transform = 'translateX(0px)';
           return;
         }
 
-        const sectionRect = horizontalSection.getBoundingClientRect();
         const sectionTop = horizontalSection.offsetTop;
         const sectionHeight = horizontalSection.offsetHeight;
         const windowHeight = window.innerHeight;
         const scrollY = window.scrollY;
 
         // The scroll range for the horizontal animation
-        // This is where the magic happens: we define the scroll window that triggers the horizontal movement
-        // Let's make it such that scrolling down half the section moves the first panel out and second in
-        const scrollAnimationHeight = sectionHeight / 2; // You can adjust this value
+        // The animation should start when the section is at the top of the viewport
+        const scrollAnimationHeight = sectionHeight / 2; // Adjust this value to control vertical scroll distance for horizontal movement
         const scrollStart = sectionTop;
-        const scrollEnd = sectionTop + scrollAnimationHeight - windowHeight / 2; // Center of screen when panel is fully moved
+        const scrollEnd = scrollStart + scrollAnimationHeight; // Animation ends when this vertical scroll point is reached
 
-        if (scrollAnimationHeight <= 0) return;
-
+        if (scrollAnimationHeight <= 0) return; // Prevent division by zero or negative range
 
         if (scrollY >= scrollStart && scrollY <= scrollEnd) {
-          // Calculate progress from 0 to 1
+          // Calculate progress from 0 to 1 based on vertical scroll within the animation range
           const progress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
           
           // Calculate the target translateX.
-          // It starts at initialTranslateX (first panel centered) and moves to initialTranslateX - panelWidth (second panel centered)
-          const translateX = initialTranslateX - (progress * panelWidth);
+          // It starts at initialTranslateX (first panel centered) and moves to initialTranslateX - panelEffectiveWidth (second panel centered)
+          const translateX = initialTranslateX - (progress * panelEffectiveWidth);
           
           horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
           
         } else if (scrollY < scrollStart) {
-          // Before the section, ensure the first panel is centered
+          // Before the section's animation start point, ensure the first panel is centered
           horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
-        } else {
-          // After the section, ensure the second panel is centered (first panel fully off-screen left)
-          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX - panelWidth}px)`;
+        } else { // scrollY > scrollEnd
+          // After the section's animation end point, ensure the second panel is centered (first panel fully off-screen left)
+          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX - panelEffectiveWidth}px)`;
         }
       });
 
