@@ -233,7 +233,13 @@
       height: 100%;
       will-change: transform;
       transition: transform 0.1s ease-out; /* Smooth transition */
+      /* Initially position the first panel in the center */
+      justify-content: center; /* Center the entire wrapper */
+      width: 200vw; /* Accommodate two 100vw panels */
     }
+    /* This will initially shift the content wrapper so the first panel is centered */
+    /* Needs to be managed by JS for accurate centering relative to the viewport width */
+
 
     .horizontal-panel {
       flex-shrink: 0;
@@ -338,6 +344,8 @@
       .horizontal-content-wrapper {
         flex-direction: column;
         transform: none !important;
+        width: auto; /* Revert width to auto on mobile */
+        justify-content: flex-start; /* Revert justification */
       }
       
       .horizontal-panel {
@@ -675,11 +683,7 @@
 
   <div id="waarom-wrapper">
     <section class="horizontal-scroll-section" id="waarom-horizontal">
-      <!-- <h2 class="section-title">Waarom</h2> -->
       <div class="waarom-container">
-        <!-- <div class="fixed-image-wrapper">
-          <img src="./images/temp_logo.png" alt="Quickstep AI logo", class="fixed-illustration">
-        </div> -->
         <div class="scrollable-content-window">
           <div class="horizontal-content-wrapper">
             
@@ -991,29 +995,33 @@
 
       const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper');
       const panels = horizontalSection.querySelectorAll('.horizontal-panel');
+      const waaromContainer = horizontalSection.querySelector('.waarom-container');
       
-      if (!horizontalContentWrapper || panels.length === 0) return;
+      if (!horizontalContentWrapper || panels.length < 2) return; // Need at least two panels
 
-      let maxScrollDistance = 0;
+      let panelWidth = 0;
+      let initialTranslateX = 0;
 
       const calculateScrollDistance = () => {
         if (window.innerWidth > 992) {
-          // Calculate total width of all panels
-          const totalPanelWidth = Array.from(panels).reduce((total, panel) => {
-            return total + panel.offsetWidth;
-          }, 0);
+          // Get the width of one panel (assuming all panels have equal effective width)
+          // Use clientWidth of the parent container to determine the effective "center"
+          panelWidth = waaromContainer.offsetWidth; 
           
-          // Get the container width
-          const containerWidth = horizontalContentWrapper.parentElement.offsetWidth;
-          
-          // Calculate how much we need to scroll
-          maxScrollDistance = Math.max(0, totalPanelWidth - containerWidth);
-          
-          console.log('Total panel width:', totalPanelWidth);
-          console.log('Container width:', containerWidth);
-          console.log('Max scroll distance:', maxScrollDistance);
+          // The initial position to center the first panel.
+          // This ensures the left edge of the first panel is at (containerWidth - panelWidth) / 2
+          // No, it should be -((total width of panels - viewport width) / 2)
+          // For two panels, total width is 2 * panelWidth
+          initialTranslateX = (waaromContainer.offsetWidth - panels[0].offsetWidth) / 2;
+          // Set initial transform to center the first panel
+          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
+          horizontalContentWrapper.style.justifyContent = 'flex-start'; // Disable flex centering if JS takes over
+
         } else {
-          maxScrollDistance = 0;
+          panelWidth = 0;
+          initialTranslateX = 0;
+          horizontalContentWrapper.style.transform = 'translateX(0px)';
+          horizontalContentWrapper.style.justifyContent = 'center'; // Re-enable CSS centering for mobile
         }
       };
 
@@ -1021,7 +1029,7 @@
       calculateScrollDistance();
 
       window.addEventListener('scroll', () => {
-        if (window.innerWidth <= 992 || maxScrollDistance === 0) {
+        if (window.innerWidth <= 992 || panelWidth === 0) {
           horizontalContentWrapper.style.transform = 'translateX(0px)';
           return;
         }
@@ -1032,27 +1040,32 @@
         const windowHeight = window.innerHeight;
         const scrollY = window.scrollY;
 
-        // Calculate the scroll range
+        // The scroll range for the horizontal animation
+        // This is where the magic happens: we define the scroll window that triggers the horizontal movement
+        // Let's make it such that scrolling down half the section moves the first panel out and second in
+        const scrollAnimationHeight = sectionHeight / 2; // You can adjust this value
         const scrollStart = sectionTop;
-        const scrollEnd = sectionTop + sectionHeight - windowHeight;
-        const scrollRange = scrollEnd - scrollStart;
+        const scrollEnd = sectionTop + scrollAnimationHeight - windowHeight / 2; // Center of screen when panel is fully moved
 
-        if (scrollRange <= 0) return;
+        if (scrollAnimationHeight <= 0) return;
+
 
         if (scrollY >= scrollStart && scrollY <= scrollEnd) {
-          // We're in the horizontal scroll zone
-          const progress = (scrollY - scrollStart) / scrollRange;
-          const translateX = -progress * maxScrollDistance;
+          // Calculate progress from 0 to 1
+          const progress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
+          
+          // Calculate the target translateX.
+          // It starts at initialTranslateX (first panel centered) and moves to initialTranslateX - panelWidth (second panel centered)
+          const translateX = initialTranslateX - (progress * panelWidth);
           
           horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
           
-          console.log('Progress:', progress.toFixed(2), 'TranslateX:', translateX.toFixed(2));
         } else if (scrollY < scrollStart) {
-          // Before the section
-          horizontalContentWrapper.style.transform = 'translateX(0px)';
+          // Before the section, ensure the first panel is centered
+          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
         } else {
-          // After the section
-          horizontalContentWrapper.style.transform = `translateX(-${maxScrollDistance}px)`;
+          // After the section, ensure the second panel is centered (first panel fully off-screen left)
+          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX - panelWidth}px)`;
         }
       });
 
