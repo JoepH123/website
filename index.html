@@ -565,7 +565,10 @@
             padding: 40px; /* Adjust padding as needed */
         }
         .fixed-image-wrapper {
-            width: 250px; /* Adjust image size for smaller screens */
+            max-width: 250px; /* Adjust image size for smaller screens */
+            height: auto;             /* let it size itself */
+            max-height: 220px;        /* caps the height */
+            width: auto;              /* keep aspect ratio */
             padding-right: 0;
             margin-bottom: 30px; /* Space between image and stacked content */
         }
@@ -668,9 +671,7 @@
     <section class="horizontal-scroll-section" id="waarom-horizontal">
       <div class="waarom-container">
         <div class="fixed-image-wrapper">
-          <div class="fixed-illustration" style="background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; height: 200px; border-radius: 12px;">
-            LOGO
-          </div>
+          <img src="./images/temp_logo.png" alt="Quickstep AI logo">
         </div>
         <div class="scrollable-content-window">
           <div class="horizontal-content-wrapper">
@@ -706,15 +707,15 @@
                   <div class="values-grid">
                     <div class="value-item">
                       <i class="fas fa-handshake"></i>
-                      <span>TOEGANKELIJK</span>
+                      <span>Toegankelijk</span>
                     </div>
                     <div class="value-item">
                       <i class="fas fa-bullseye"></i>
-                      <span>RESULTAATGERICHT</span>
+                      <span>Resultaatgericht</span>
                     </div>
                     <div class="value-item">
                       <i class="fas fa-lightbulb"></i>
-                      <span>TRANSPARANT</span>
+                      <span>Transparant</span>
                     </div>
                   </div>
                 </div>
