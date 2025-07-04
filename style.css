@@ -244,7 +244,7 @@ section {
 /* --- "WHY US" (WAAROM) HORIZONTAL SCROLL SECTION --- */
 #waarom-wrapper {
   background: var(--white);
-  padding-top: 10px;
+  padding-top: 20px;
 }
 .horizontal-scroll-section {
   padding: 0;
@@ -343,7 +343,6 @@ section {
 /* --- ABOUT US (OVER ONS) SECTION --- */
 #over {
   text-align: center;
-  margin-top: 50px; /* Add this line to create space above this section */
 }
 .founders-container {
   display: flex;
