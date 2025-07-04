@@ -26,6 +26,9 @@
     /* Waarom (the horizontal scroll part) and Contact should be white */
     #waarom-wrapper, #contact { background: var(--white); }
 
+    #diensten, #waarom-wrapper, #over, #contact {
+      scroll-margin-top: 90px;
+    }
 
     /* Loader */
     #loader {
@@ -267,6 +270,7 @@
       line-height: 1.7;
       margin-bottom: 30px;
       color: #555;
+      min-height: 120px; /* Makes sure the benefits and items are aligned */
     }
 
     .benefits-grid, .values-grid {
