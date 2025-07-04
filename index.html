@@ -176,40 +176,50 @@
     }
 
     /* Waarom Quickstep - Horizontal Scroll Section */
+    /* #waarom-wrapper, #contact { background: var(--white); } */
+
+    /* Adjust padding for waarom-wrapper */
     #waarom-wrapper {
-      background: var(--white);
-      padding: 0; /* Remove padding from wrapper */
+      padding: 70px 40px; /* Apply similar padding as other sections */
     }
 
+    /* Waarom Quickstep - Horizontal Scroll Section */
     .horizontal-scroll-section {
-      height: 300vh; /* Increased height for more scroll distance */
+      height: 100vh; /* Keep height for horizontal scroll effect */
       position: relative;
+      /* Center the section content horizontally */
+      display: flex;
+      justify-content: center;
+      align-items: center; /* Vertically center content within the section */
     }
 
     .waarom-container {
       position: sticky;
       top: 0;
-      /* height: 100vh; */
+      height: 100vh; /* Ensure the container takes full viewport height for sticky effect */
       width: 100%;
       display: flex;
       align-items: center;
       padding: 0 40px;
       box-sizing: border-box;
-      overflow: hidden; /* Ensure content doesn't overflow */
+      overflow: hidden;
+      /* Adjust max-width to center the content within the available space */
+      max-width: 1200px; /* Or a suitable max-width to center the content */
+      margin: 0 auto; /* Center the container itself */
     }
 
     .fixed-image-wrapper {
       flex-shrink: 0;
-      width: 300px;
+      width: auto; /* Allow width to adjust based on aspect ratio */
       display: flex;
       justify-content: center;
       align-items: center;
-      padding-right: 50px;
+      padding-right: 50px; /* Keep space to the right of the image */
     }
 
     .fixed-illustration {
-      max-height: 250px;
-      width: auto;
+      max-height: 225px; /* Set max height to approximately 225px */
+      width: auto; /* Maintain aspect ratio */
       height: auto;
       object-fit: contain;
       border-radius: 12px;
@@ -232,8 +242,8 @@
 
     .horizontal-panel {
       flex-shrink: 0;
-      width: 100vw; /* Each panel takes full viewport width */
-      max-width: 800px; /* But limit max width for readability */
+      width: 100%; /* Each panel takes full available width within the window */
+      max-width: 800px; /* Keep max-width for readability */
       height: 100%;
       display: flex;
       align-items: center;
@@ -274,6 +284,9 @@
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 20px;
       margin-top: 30px;
+      /* Ensure horizontal alignment for the keyword divs */
+      justify-items: center; /* Centers grid items horizontally */
+      align-items: start; /* Aligns grid items to the start of the column */
     }
 
     .benefit-item, .value-item {
@@ -723,7 +736,7 @@
               </div>
             </div>
 
-            <div class="horizontal-panel">
+            <!-- <div class="horizontal-panel">
               <div class="content-wrapper">
                 <div class="text-content">
                   <h3 class="section-heading">Onze Aanpak</h3>
@@ -744,7 +757,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
           </div>
         </div>
