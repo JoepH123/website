@@ -101,8 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- HORIZONTAL SCROLL LOGIC ---
-  // Manages the horizontal scrolling effect in the "Waarom" section on desktop.
-  // This effect is disabled on mobile for better usability.
+  // Manages the horizontal scrolling effect in the "Waarom" section.
+  // This logic centers the first panel, then scrolls it completely out of view 
+  // while centering the second panel. This is achieved by dynamically inserting a gap.
   const horizontalSection = document.getElementById('waarom-horizontal');
   if (horizontalSection) {
     const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper');
@@ -112,18 +113,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (horizontalContentWrapper && panels.length > 1 && scrollableContentWindow) {
       let panelEffectiveWidth = 0;
       let initialTranslateX = 0;
+      let gap = 0;
 
       const calculateScrollDistance = () => {
         if (window.innerWidth > 992) {
-          panelEffectiveWidth = panels[0].offsetWidth;
           const viewportWidth = scrollableContentWindow.offsetWidth;
+          panelEffectiveWidth = panels[0].offsetWidth;
+          
+          // Calculate the required gap to satisfy both conditions:
+          // 1. Panel 2 is centered at the end.
+          // 2. Panel 1 is off-screen at the end.
+          gap = (viewportWidth - panelEffectiveWidth) / 2;
+          gap = Math.max(0, gap); // Ensure gap is not negative
+          
+          horizontalContentWrapper.style.gap = `${gap}px`;
+
+          // Initial position: center the first panel
           initialTranslateX = (viewportWidth - panelEffectiveWidth) / 2;
           horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
           horizontalContentWrapper.style.justifyContent = 'flex-start';
         } else {
+          // Reset styles for mobile view
           panelEffectiveWidth = 0;
           initialTranslateX = 0;
-          horizontalContentWrapper.style.transform = 'translateX(0px)';
+          gap = 0;
+          horizontalContentWrapper.style.gap = '0px';
+          horizontalContentWrapper.style.transform = 'none';
           horizontalContentWrapper.style.justifyContent = 'center';
         }
       };
@@ -134,67 +149,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const sectionTop = horizontalSection.offsetTop;
         const sectionHeight = horizontalSection.offsetHeight;
         const scrollY = window.scrollY;
+        
+        // Define the part of the section's height during which the scroll animation occurs
         const scrollAnimationHeight = sectionHeight / 2;
         const scrollStart = sectionTop;
         const scrollEnd = scrollStart + scrollAnimationHeight;
 
         if (scrollY >= scrollStart && scrollY <= scrollEnd) {
           const progress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
-          const translateX = initialTranslateX - (progress * panelEffectiveWidth);
+          // The total distance to translate is the width of one panel plus the calculated gap.
+          const totalScrollDistance = panelEffectiveWidth + gap;
+          const translateX = initialTranslateX - (progress * totalScrollDistance);
           horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
         } else if (scrollY < scrollStart) {
+          // Before the scroll area, snap to the initial position
           horizontalContentWrapper.style.transform = `translateX(${initialTranslateX}px)`;
         } else {
-          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX - panelEffectiveWidth}px)`;
+          // After the scroll area, snap to the final position
+          const totalScrollDistance = panelEffectiveWidth + gap;
+          horizontalContentWrapper.style.transform = `translateX(${initialTranslateX - totalScrollDistance}px)`;
         }
       };
 
-      // Initial and on-resize calculations
+      // Set initial state and add listeners for scroll and resize events
       calculateScrollDistance();
       window.addEventListener('resize', calculateScrollDistance);
       window.addEventListener('scroll', handleScroll);
     }
   }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const section   = document.getElementById('waarom-horizontal');
-  const container = section.querySelector('.scrollable-content-window');
-  const wrapper   = section.querySelector('.horizontal-content-wrapper');
-  const panel     = wrapper.querySelector('.horizontal-panel');
-
-  let panelW, offset, sectionTop, totalScroll;
-
-  function recalc() {
-    panelW      = panel.getBoundingClientRect().width;
-    offset      = (container.clientWidth - panelW) / 2;
-    sectionTop  = section.offsetTop;
-    totalScroll = section.offsetHeight - window.innerHeight;
-    // initialize at load/resize
-    applyTransform(getScrollPct());
-  }
-
-  function getScrollPct() {
-    const scrollY = window.scrollY;
-    let pct = (scrollY - sectionTop) / totalScroll;
-    return Math.min(Math.max(pct, 0), 1);
-  }
-
-  function applyTransform(pct) {
-    // when pct=0 → translateX = +offset  (centers panel #1)
-    // when pct=1 → translateX = −panelW + offset  (centers panel #2)
-    const x = -pct * panelW + offset;
-    wrapper.style.transform = `translateX(${x}px)`;
-  }
-
-  // on scroll
-  window.addEventListener('scroll', () => {
-    applyTransform(getScrollPct());
-  });
-
-  // on resize
-  window.addEventListener('resize', recalc);
-
-  // kick it off
-  recalc();
 });

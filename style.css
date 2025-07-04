@@ -268,7 +268,7 @@ section {
   display: flex;
   align-items: center;
 }
-/* .horizontal-content-wrapper {
+.horizontal-content-wrapper {
   display: flex;
   height: 100%;
   will-change: transform;
@@ -285,8 +285,8 @@ section {
   justify-content: center;
   padding: 40px;
   box-sizing: border-box;
-} */
- .horizontal-content-wrapper {
+}
+ /* .horizontal-content-wrapper {
   display: flex;
   height: 100%;
   will-change: transform;
@@ -303,7 +303,7 @@ section {
   justify-content: center;
   padding: 40px;
   box-sizing: border-box;
-}
+} */
 .horizontal-panel .content-wrapper {
   display: flex;
   flex-direction: column;
