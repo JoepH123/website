@@ -22,11 +22,7 @@
     body { font-family: var(--font); color: var(--dark); }
 
     /* Background stripes for sections */
-    /* Updated: diensten is even, over is even, contact is even (as per new order/section logic) */
-    #diensten, #over, #contact { background: var(--light-blue); }
-    /* Waarom (the horizontal scroll part) should be white */
-    #waarom-wrapper { background: var(--white); }
-
+    section:nth-of-type(even) { background: var(--light-blue); }
 
     /* Loader */
     #loader {
@@ -140,7 +136,7 @@
     .btn:hover { transform: scale(1.05); }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* General Sections */
+    /* Sections */
     section { padding: 70px 40px; }
     .container { max-width: 1200px; margin: 0 auto; }
     .section-title {
@@ -176,130 +172,74 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
 
-    /* Waarom Quickstep - Horizontal Scroll Section Wrapper */
-    #waarom-wrapper {
-      /* This is the new wrapper for the entire horizontal scroll section */
-      min-height: 100vh; /* Ensure it's at least one viewport high */
-      background: var(--white); /* This provides the white background for the whole block */
-      padding-top: 70px; /* Add padding similar to other sections */
-      padding-bottom: 70px;
-      position: relative; /* Needed for child absolute positioning if any, not strictly for sticky */
-      z-index: 1; /* Ensure it sits above any potential lower layers */
-    }
-
-    /* Waarom Quickstep - Horizontal Scroll Content */
-    .horizontal-scroll-section {
-        /* This section now contains the sticky logic */
-        height: 200vh; /* This determines the vertical scroll amount for the horizontal effect */
-        position: relative; /* For inner positioning */
-    }
-
-    .horizontal-scroll-container {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
+    /* Waarom Quickstep */
+    #waarom .content-wrapper { /* Renamed from about-wrapper to be more generic */
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      /* background-color: var(--light-blue); -- REMOVED, controlled by parent #waarom-wrapper */
+      justify-content: center; /* Center the content if space allows */
+      gap: 60px; /* Increased gap for more breathing room */
+      flex-wrap: wrap; /* Allows wrapping on smaller screens */
+      text-align: left; /* Default text alignment */
     }
 
-    .horizontal-content-wrapper {
-      display: flex;
-      height: 100%;
-      width: fit-content;
-      transform: translateX(0);
-      will-change: transform;
-      padding: 0 5vw;
-    }
-
-    .horizontal-panel {
-      flex-shrink: 0;
-      width: 90vw;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-      box-sizing: border-box;
-    }
-
-    .horizontal-panel .content-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 60px;
-        flex-wrap: nowrap;
-        text-align: left;
-        max-width: 1200px;
-        width: 100%;
-    }
-
-    .horizontal-panel:first-of-type .content-wrapper {
-        justify-content: center;
-    }
-
-    .text-content {
+    #waarom .text-content { /* New container for all text */
         flex: 1;
-        min-width: 300px;
-        max-width: 700px;
+        min-width: 300px; /* Ensure text content doesn't get too narrow */
+        max-width: 700px; /* Max width for readability */
     }
 
-    .illustration {
-        flex-shrink: 0;
-        width: 300px;
+    #waarom .illustration {
+        flex-shrink: 0; /* Prevent the image from shrinking */
+        width: 300px; /* Fixed width for the illustration */
         height: auto;
-        border-radius: 12px;
+        border-radius: 12px; /* Keep existing border-radius */
         object-fit: contain;
-        max-width: 100%;
+        max-width: 100%; /* Ensure it's responsive */
     }
 
-    .section-heading {
-        font-size: 2rem;
+    #waarom .section-heading { /* New style for the sub-headings in this section */
+        font-size: 2rem; /* Slightly smaller than main section titles */
         color: var(--primary);
         margin-bottom: 20px;
-        text-align: left;
+        text-align: left; /* Align to left within its container */
     }
 
-    #waarom-wrapper p { /* Targeting p within the wrapper for consistent style */
+    #waarom p {
         font-size: 1.05rem;
         line-height: 1.7;
-        margin-bottom: 25px;
+        margin-bottom: 25px; /* Spacing between paragraphs */
         color: #555;
     }
 
     .benefits-grid, .values-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Auto-fit for responsiveness */
         gap: 20px;
-        margin-top: 30px;
-        margin-bottom: 40px;
+        margin-top: 30px; /* Space above the grids */
+        margin-bottom: 40px; /* Space below the grids */
     }
 
     .benefit-item, .value-item {
         background: var(--white);
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
-        border: 1px solid rgba(0, 133, 255, 0.1);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Slightly stronger shadow */
         display: flex;
-        flex-direction: column;
+        flex-direction: column; /* Stack icon and text vertically */
         align-items: center;
         text-align: center;
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
     .benefit-item:hover, .value-item:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2), 0 0 0 2px var(--primary);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.12);
     }
 
     .benefit-item i, .value-item i {
-        font-size: 2.2rem;
+        font-size: 2.2rem; /* Larger icons */
         color: var(--primary);
-        margin-bottom: 15px;
+        margin-bottom: 15px; /* Space between icon and text */
     }
 
     .benefit-item span, .value-item span {
@@ -328,8 +268,8 @@
     }
 
     .founder-photo {
-        width: 180px;
-        height: 180px;
+        width: 180px; /* Increased size for better visibility */
+        height: 180px; /* Increased size for better visibility */
         border-radius: 50%;
         object-fit: cover;
         border: 5px solid var(--primary);
@@ -514,46 +454,20 @@
     /* ------------------------------------- */
     /* 4) Responsive tweaks               */
     /* ------------------------------------- */
-    @media (max-width: 992px) {
-        /* General for horizontal scroll panels on smaller screens */
-        .horizontal-panel .content-wrapper {
+    @media (max-width: 992px) { /* Adjust breakpoint for tablet */
+        #waarom .content-wrapper {
             flex-direction: column;
             text-align: center;
-            gap: 30px;
         }
-        .illustration {
-            width: 250px;
-        }
-        .text-content {
-            min-width: unset;
+        #waarom .text-content {
+            min-width: unset; /* Remove min-width to allow better scaling */
             max-width: 100%;
         }
-        .section-heading {
-            text-align: center;
+        #waarom .illustration {
+            width: 250px; /* Slightly smaller illustration on tablets */
         }
-        .horizontal-scroll-container {
-          /* Disable sticky and horizontal scroll on smaller screens for better UX */
-          position: static;
-          height: auto;
-          overflow: visible;
-          flex-direction: column; /* Stack panels vertically */
-        }
-        .horizontal-content-wrapper {
-          transform: none !important; /* Disable JS translation */
-          width: 100%;
-          padding: 0; /* Remove horizontal padding for stacked panels */
-          flex-direction: column;
-        }
-        .horizontal-panel {
-          width: 100%; /* Take full width */
-          padding: 70px 40px; /* Add back section padding for vertical flow */
-          height: auto; /* Auto height for content */
-        }
-        #waarom-wrapper {
-            height: auto; /* Adjust wrapper height */
-        }
-        .horizontal-scroll-section {
-            height: auto; /* Adjust section height */
+        #waarom .section-heading {
+            text-align: center; /* Center align headings on smaller screens */
         }
     }
 
@@ -566,8 +480,8 @@
         flex-direction: column;
         text-align: center;
       }
-      .illustration {
-            width: 200px;
+      #waarom .illustration {
+            width: 200px; /* Even smaller illustration on mobile */
       }
       .benefits-grid, .values-grid {
         grid-template-columns: 1fr; /* Stack items on mobile */
@@ -590,7 +504,8 @@
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#diensten">Diensten</a>
-        <a href="#waarom-wrapper">Waarom Quickstep?</a> <a href="#over">Over Ons</a>
+        <a href="#waarom">Waarom Quickstep?</a>
+        <a href="#over">Over Ons</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -623,67 +538,50 @@
     </div>
   </section>
 
-  <div id="waarom-wrapper">
-    <div class="container">
-      <h2 class="section-title">Waarom Quickstep AI?</h2>
-    </div>
+  <section id="waarom">
+    <div class="container" data-aos="fade-up">
+      <h2 class="section-title">Waarom Quickstep AI?</h2> <div class="content-wrapper">
+        <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration" data-aos="fade-right">
+        <div class="text-content" data-aos="fade-left">
+          <h3 class="section-heading">Waarom AI?</h3> <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
 
-    <section class="horizontal-scroll-section" id="waarom-horizontal">
-        <div class="horizontal-scroll-container">
-            <div class="horizontal-content-wrapper">
+          <div class="benefits-grid">
+              <div class="benefit-item">
+                  <i class="fas fa-rocket"></i>
+                  <span>Productiviteitsstijging</span>
+              </div>
+              <div class="benefit-item">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Omzetgroei</span>
+              </div>
+              <div class="benefit-item">
+                  <i class="fas fa-coins"></i>
+                  <span>Kostenbesparing</span>
+              </div>
+          </div>
 
-                <div class="horizontal-panel">
-                    <div class="content-wrapper">
-                        <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration">
-                        <div class="text-content">
-                            <h3 class="section-heading">Waarom AI?</h3>
-                            <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
-                            <div class="benefits-grid">
-                                <div class="benefit-item">
-                                    <i class="fas fa-rocket"></i>
-                                    <span>Productiviteitsstijging</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Omzetgroei</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-coins"></i>
-                                    <span>Kostenbesparing</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="horizontal-panel">
-                    <div class="content-wrapper">
-                        <div class="text-content">
-                            <h3 class="section-heading">Wat Maakt Quickstep AI Uniek?</h3>
-                            <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
-                            <div class="values-grid">
-                                <div class="value-item">
-                                    <i class="fas fa-handshake"></i>
-                                    <span>TOEGANKELIJK</span>
-                                </div>
-                                <div class="value-item">
-                                    <i class="fas fa-bullseye"></i>
-                                    <span>RESULTAATGERICHT</span>
-                                </div>
-                                <div class="value-item">
-                                    <i class="fas fa-lightbulb"></i>
-                                    <span>TRANSPARANT</span>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration">
-                    </div>
-                </div>
-
-            </div>
+          <h3 class="section-heading">Wat Maakt Quickstep AI Uniek?</h3> <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
+          
+          <div class="values-grid">
+              <div class="value-item">
+                  <i class="fas fa-handshake"></i>
+                  <span>TOEGANKELIJK</span>
+              </div>
+              <div class="value-item">
+                  <i class="fas fa-bullseye"></i>
+                  <span>RESULTAATGERICHT</span>
+              </div>
+              <div class="value-item">
+                  <i class="fas fa-lightbulb"></i>
+                  <span>TRANSPARANT</span>
+              </div>
+          </div>
         </div>
-    </section>
-  </div> <section id="over">
+      </div>
+    </div>
+  </section>
+
+  <section id="over">
     <div class="container">
       <h2 class="section-title">Over Ons</h2>
       <div class="founders-container">
@@ -931,73 +829,6 @@
       },
       "retina_detect": true
     });
-
-    // Horizontal Scroll Logic for #waarom-horizontal section
-    document.addEventListener('DOMContentLoaded', () => {
-        const horizontalSection = document.getElementById('waarom-horizontal'); // Target the inner section
-        if (!horizontalSection) return; // Exit if element not found
-
-        const horizontalContainer = horizontalSection.querySelector('.horizontal-scroll-container');
-        const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper');
-        const panels = Array.from(horizontalContentWrapper.children);
-
-        let totalHorizontalWidth = 0;
-        const calculateDimensions = () => {
-            totalHorizontalWidth = 0;
-            panels.forEach(panel => {
-                totalHorizontalWidth += panel.offsetWidth;
-            });
-            // We want to scroll from the start of the first panel to the end of the last panel,
-            // taking into account the viewport width.
-            // Also account for the 5vw padding on each side of the wrapper.
-            // (2 panels * 90vw width) + (2 * 5vw padding) = 180vw + 10vw = 190vw total content width
-            // We want to scroll the entire 90vw of the first panel, then 90vw of the second.
-            // The scrollDistance should be the full width of the content wrapper minus the viewport width it occupies.
-            scrollDistance = horizontalContentWrapper.scrollWidth - window.innerWidth;
-            // Ensure non-negative
-            if (scrollDistance < 0) scrollDistance = 0;
-        };
-
-        calculateDimensions(); // Initial calculation
-
-        window.addEventListener('scroll', () => {
-            // Only activate on larger screens where horizontal scroll is desired
-            if (window.innerWidth <= 992) {
-                horizontalContentWrapper.style.transform = `translateX(0px)`;
-                return; // Exit if screen is too small
-            }
-
-            const sectionTop = horizontalSection.offsetTop;
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-
-            // The scroll range for horizontal movement:
-            // Starts when horizontalContainer is sticky (at top: 0)
-            // Ends when scrollY has progressed enough to cover the `horizontalSection.offsetHeight`
-            // minus one viewport height (because it sticks for one viewport height)
-
-            // Adjusted logic: the scroll starts when the container hits the top.
-            // The duration of the horizontal scroll is defined by the height of `horizontal-scroll-section`
-            // minus `100vh` (because it's sticky for 100vh).
-            const scrollStart = sectionTop; // When horizontalContainer becomes sticky
-            const scrollEnd = sectionTop + horizontalSection.offsetHeight - windowHeight; // When horizontalContainer is about to leave sticky state
-
-            if (scrollY >= scrollStart && scrollY <= scrollEnd) {
-                const scrollProgress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
-                const translateX = -scrollProgress * scrollDistance;
-                horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
-            } else if (scrollY < scrollStart) {
-                // Before the horizontal section
-                horizontalContentWrapper.style.transform = `translateX(0px)`;
-            } else if (scrollY > scrollEnd) {
-                // After the horizontal section
-                horizontalContentWrapper.style.transform = `translateX(-${scrollDistance}px)`;
-            }
-        });
-
-        window.addEventListener('resize', calculateDimensions); // Recalculate on resize
-    });
-
   </script>
 </body>
 </html>
