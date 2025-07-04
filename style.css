@@ -244,8 +244,8 @@ section {
 /* --- "WHY US" (WAAROM) HORIZONTAL SCROLL SECTION --- */
 #waarom-wrapper {
   background: var(--white);
-  padding-top: 50px;
-  padding-bottom: 20px;
+  padding-top: 30px;
+  padding-bottom: 700px;
 }
 .horizontal-scroll-section {
   padding: 0;
