@@ -191,29 +191,56 @@
         position: relative;
     }
 
-    .horizontal-scroll-container {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
+    /* New: Container for fixed image and scrollable content */
+    .waarom-container {
+        position: sticky; /* Make this sticky within the horizontal-scroll-section */
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        display: flex; /* Arrange image and content side-by-side */
+        align-items: center;
+        padding: 0 40px; /* Add some padding to the container */
+        box-sizing: border-box;
+    }
+
+    /* New: Styling for the fixed image */
+    .fixed-image-wrapper {
+        flex-shrink: 0; /* Prevent the image from shrinking */
+        width: 350px; /* Adjust this width as needed for your logo */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 40px; /* Space between image and scrolling content */
+    }
+
+    .fixed-illustration {
+        width: 100%; /* Make the image responsive within its wrapper */
+        height: auto;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+    /* New: Styling for the scrolling content window */
+    .scrollable-content-window {
+        flex-grow: 1; /* Allow the content window to take remaining space */
+        height: 100%;
+        overflow: hidden; /* This creates the "window" effect */
+        display: flex; /* Ensure horizontal-content-wrapper fills this space */
+        align-items: center;
     }
 
     .horizontal-content-wrapper {
       display: flex;
       height: 100%;
-      width: fit-content;
+      width: fit-content; /* Allow content to dictate width */
       transform: translateX(0);
       will-change: transform;
-      padding: 0 5vw;
+      /* Remove padding: 0 5vw; from here as it's now on warum-container */
     }
 
     .horizontal-panel {
       flex-shrink: 0;
-      width: 90vw;
+      width: calc(100vw - 350px - 80px); /* Adjust width to fill the remaining space in the window, considering fixed image width and warum-container padding */
       height: 100%;
       display: flex;
       align-items: center;
@@ -243,14 +270,14 @@
         max-width: 700px;
     }
 
-    .illustration {
+    /* .illustration {
         flex-shrink: 0;
         width: 300px;
         height: auto;
         border-radius: 12px;
         object-fit: contain;
         max-width: 100%;
-    }
+    } */ /* This rule is now replaced by fixed-illustration */
 
     .section-heading {
         font-size: 2rem;
@@ -511,45 +538,42 @@
     /* 4) Responsive tweaks               */
     /* ------------------------------------- */
     @media (max-width: 992px) {
-        /* General for horizontal scroll panels on smaller screens */
+        .waarom-container {
+            position: static; /* Disable sticky on smaller screens */
+            height: auto;
+            flex-direction: column; /* Stack image and content vertically */
+            padding: 40px; /* Adjust padding as needed */
+        }
+        .fixed-image-wrapper {
+            width: 250px; /* Adjust image size for smaller screens */
+            padding-right: 0;
+            margin-bottom: 30px; /* Space between image and stacked content */
+        }
+        .scrollable-content-window {
+            overflow: visible; /* Allow content to overflow vertically */
+            height: auto;
+            flex-grow: unset; /* Remove flex-grow */
+            width: 100%;
+        }
+        .horizontal-content-wrapper {
+            flex-direction: column; /* Stack panels vertically */
+            width: 100%;
+            transform: none !important; /* Disable JS translation */
+            height: auto;
+        }
+        .horizontal-panel {
+            width: 100%; /* Take full width */
+            padding: 40px 0; /* Adjust padding for vertical flow */
+            height: auto; /* Auto height for content */
+            justify-content: center; /* Center content within panel */
+        }
         .horizontal-panel .content-wrapper {
-            flex-direction: column;
+            flex-direction: column; /* Stack image and text in panels */
             text-align: center;
             gap: 30px;
         }
-        .illustration {
-            width: 250px;
-        }
-        .text-content {
-            min-width: unset;
-            max-width: 100%;
-        }
         .section-heading {
             text-align: center;
-        }
-        .horizontal-scroll-container {
-          /* Disable sticky and horizontal scroll on smaller screens for better UX */
-          position: static;
-          height: auto;
-          overflow: visible;
-          flex-direction: column; /* Stack panels vertically */
-        }
-        .horizontal-content-wrapper {
-          transform: none !important; /* Disable JS translation */
-          width: 100%;
-          padding: 0; /* Remove horizontal padding for stacked panels */
-          flex-direction: column;
-        }
-        .horizontal-panel {
-          width: 100%; /* Take full width */
-          padding: 70px 40px; /* Add back section padding for vertical flow */
-          height: auto; /* Auto height for content */
-        }
-        #waarom-wrapper {
-            height: auto; /* Adjust wrapper height */
-        }
-        .horizontal-scroll-section {
-            height: auto; /* Adjust section height */
         }
     }
 
@@ -622,56 +646,58 @@
 
   <div id="waarom-wrapper">
     <section class="horizontal-scroll-section" id="waarom-horizontal">
-        <div class="horizontal-scroll-container">
-            <div class="horizontal-content-wrapper">
+        <div class="waarom-container"> <div class="fixed-image-wrapper">
+                <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration fixed-illustration">
+            </div>
+            <div class="scrollable-content-window"> <div class="horizontal-content-wrapper">
 
-                <div class="horizontal-panel">
-                    <div class="content-wrapper">
-                        <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration">
-                        <div class="text-content">
-                            <h3 class="section-heading">Waarom AI?</h3>
-                            <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
-                            <div class="benefits-grid">
-                                <div class="benefit-item">
-                                    <i class="fas fa-rocket"></i>
-                                    <span>Productiviteitsstijging</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Omzetgroei</span>
-                                </div>
-                                <div class="benefit-item">
-                                    <i class="fas fa-coins"></i>
-                                    <span>Kostenbesparing</span>
+                    <div class="horizontal-panel">
+                        <div class="content-wrapper">
+                            <div class="text-content">
+                                <h3 class="section-heading">Waarom AI?</h3>
+                                <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
+                                <div class="benefits-grid">
+                                    <div class="benefit-item">
+                                        <i class="fas fa-rocket"></i>
+                                        <span>Productiviteitsstijging</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Omzetgroei</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-coins"></i>
+                                        <span>Kostenbesparing</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="horizontal-panel">
-                    <div class="content-wrapper">
-                        <div class="text-content">
-                            <h3 class="section-heading">Wat Maakt Quickstep AI Uniek?</h3>
-                            <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
-                            <div class="values-grid">
-                                <div class="value-item">
-                                    <i class="fas fa-handshake"></i>
-                                    <span>TOEGANKELIJK</span>
-                                </div>
-                                <div class="value-item">
-                                    <i class="fas fa-bullseye"></i>
-                                    <span>RESULTAATGERICHT</span>
-                                </div>
-                                <div class="value-item">
-                                    <i class="fas fa-lightbulb"></i>
-                                    <span>TRANSPARANT</span>
+                    <div class="horizontal-panel">
+                        <div class="content-wrapper">
+                            <div class="text-content">
+                                <h3 class="section-heading">Wat Maakt Quickstep AI Uniek?</h3>
+                                <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
+                                <div class="values-grid">
+                                    <div class="value-item">
+                                        <i class="fas fa-handshake"></i>
+                                        <span>TOEGANKELIJK</span>
+                                    </div>
+                                    <div class="value-item">
+                                        <i class="fas fa-bullseye"></i>
+                                        <span>RESULTAATGERICHT</span>
+                                    </div>
+                                    <div class="value-item">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <span>TRANSPARANT</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                </div>
+                    </div>
 
+                </div>
             </div>
         </div>
     </section>
@@ -926,22 +952,88 @@
       "retina_detect": true
     });
 
-    // Waarom-panel scroll mapping
-    (function() {
-      const wrapper = document.getElementById('waarom-wrapper');
-      const panels = document.querySelector('.content-panels');
-      const totalScrollHeight = wrapper.scrollHeight - window.innerHeight;
+    // Horizontal Scroll Logic for #waarom-horizontal section
+    document.addEventListener('DOMContentLoaded', () => {
+        const horizontalSection = document.getElementById('waarom-horizontal');
+        if (!horizontalSection) return;
 
-      window.addEventListener('scroll', () => {
-        const rect = wrapper.getBoundingClientRect();
-        // only run while wrapper is in viewport
-        if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-          const progress = Math.min(1, Math.abs(rect.top) / totalScrollHeight);
-          const translateY = progress * (panels.scrollHeight - wrapper.clientHeight);
-          panels.style.transform = `translateY(-${translateY}px)`;
-        }
-      });
-    })();
+        // Changed from horizontalContainer to warumContainer for sticky parent
+        const warumContainer = horizontalSection.querySelector('.waarom-container');
+        const scrollableContentWindow = horizontalSection.querySelector('.scrollable-content-window'); // The "window"
+        const horizontalContentWrapper = horizontalSection.querySelector('.horizontal-content-wrapper'); // The actual scrolling content
+
+        let scrollDistance = 0;
+
+        const calculateDimensions = () => {
+            // Only calculate if on larger screens where horizontal scroll is active
+            if (window.innerWidth > 992) {
+                // The total width of the content that needs to scroll
+                const contentScrollWidth = horizontalContentWrapper.scrollWidth;
+                // The width of the visible window
+                const windowWidth = scrollableContentWindow.offsetWidth;
+                // The distance we need to scroll horizontally
+                scrollDistance = contentScrollWidth - windowWidth;
+                if (scrollDistance < 0) scrollDistance = 0; // Ensure it's not negative
+            } else {
+                scrollDistance = 0; // Reset for smaller screens
+            }
+            // console.log('scrollDistance:', scrollDistance);
+        };
+
+        calculateDimensions(); // Initial calculation
+
+        window.addEventListener('scroll', () => {
+            // Only activate on larger screens where horizontal scroll is desired
+            if (window.innerWidth <= 992) {
+                horizontalContentWrapper.style.transform = `translateX(0px)`;
+                return;
+            }
+
+            const sectionTop = horizontalSection.offsetTop;
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // The vertical scroll range that drives the horizontal movement
+            // This range starts when the 'waarom-container' (which is sticky) reaches the top of the viewport
+            // and ends when the section height minus the viewport height is covered.
+            const horizontalScrollStart = sectionTop;
+            const horizontalScrollEnd = sectionTop + (horizontalSection.offsetHeight - windowHeight);
+
+            if (scrollY >= horizontalScrollStart && scrollY <= horizontalScrollEnd) {
+                // Calculate progress within this specific vertical scroll range
+                const scrollProgress = (scrollY - horizontalScrollStart) / (horizontalScrollEnd - horizontalScrollStart);
+                const translateX = -scrollProgress * scrollDistance;
+                horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
+                // console.log('Scroll Progress:', scrollProgress, 'TranslateX:', translateX);
+            } else if (scrollY < horizontalScrollStart) {
+                // Before the horizontal scroll section
+                horizontalContentWrapper.style.transform = `translateX(0px)`;
+            } else if (scrollY > horizontalScrollEnd) {
+                // After the horizontal scroll section
+                horizontalContentWrapper.style.transform = `translateX(-${scrollDistance}px)`;
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            calculateDimensions();
+            // Re-apply correct transform in case resize changed scrollDistance or width
+            const sectionTop = horizontalSection.offsetTop;
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const horizontalScrollStart = sectionTop;
+            const horizontalScrollEnd = sectionTop + (horizontalSection.offsetHeight - windowHeight);
+
+            if (window.innerWidth <= 992 || scrollY < horizontalScrollStart) {
+                horizontalContentWrapper.style.transform = `translateX(0px)`;
+            } else if (scrollY > horizontalScrollEnd) {
+                horizontalContentWrapper.style.transform = `translateX(-${scrollDistance}px)`;
+            } else {
+                const scrollProgress = (scrollY - horizontalScrollStart) / (horizontalScrollEnd - horizontalScrollStart);
+                const translateX = -scrollProgress * scrollDistance;
+                horizontalContentWrapper.style.transform = `translateX(${translateX}px)`;
+            }
+        });
+    });
 
   </script>
 </body>
