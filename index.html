@@ -6,7 +6,7 @@
   <title>Quickstep AI</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com/dist/email.min.js"></script>
   <style>
     /* Variables */
@@ -52,7 +52,7 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;            /* space between image and text */
+      gap: 10px;          /* space between image and text */
     }
 
     /* increase the logo image size */
@@ -139,9 +139,16 @@
     /* Sections */
     section { padding: 70px 40px; }
     .container { max-width: 1200px; margin: 0 auto; }
+    .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+        font-size: 2.5rem;
+        color: var(--primary);
+    }
+
 
     /* Solutions */
-    #solutions .cards {
+    #diensten .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
@@ -151,6 +158,11 @@
       border-radius: 12px; text-align: center;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 250px; /* Ensure cards have a consistent height */
     }
     .card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
     .card h3 { margin-bottom: 15px; font-size: 1.3rem; }
@@ -160,32 +172,107 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
 
-    /* About */
-    #about .about-wrapper {
+    /* Waarom Quickstep */
+    #waarom .about-wrapper {
       display: flex; align-items: center;
       gap: 40px; flex-wrap: wrap;
     }
-    #about .about-img {
-      /* constrain the height */
+    #waarom .about-img {
       max-height: 200px;
-      /* don’t let flex stretch the width: */
       flex: 0 0 auto;
-      /* allow width to size itself to preserve aspect ratio */
       width: auto;
       height: auto;
-      /* if you want it to cover its box or contain inside it */
-      object-fit: contain; /* or “cover” */
+      object-fit: contain;
       border-radius: 12px;
     }
-    #about .about-text { flex: 1; }
-    .counters { display: flex; gap: 40px;
-      margin-top: 30px; flex-wrap: wrap;
-    }
-    .counter { text-align: center; flex: 1; }
-    .counter h2 { font-size: 2.5rem; color: var(--primary); }
-    .counter p { margin-top: 10px; font-size: 1rem; }
+    #waarom .about-text { flex: 1; }
 
-    /* Testimonials */
+    .key-benefits, .quickstep-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+        justify-content: center; /* Center items for better appearance */
+    }
+
+    .key-benefit-item, .quickstep-value-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark);
+        background: var(--white);
+        padding: 10px 20px;
+        border-radius: 50px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        flex: 1 1 auto; /* Allow items to grow/shrink but maintain base width */
+        max-width: 300px; /* Limit max width for smaller items */
+        justify-content: center;
+        text-align: center;
+    }
+
+    .key-benefit-item i, .quickstep-value-item i {
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    /* About Us / Over Ons */
+    #over {
+      text-align: center;
+    }
+
+    .founders-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .founder-card {
+        text-align: center;
+        flex: 0 0 auto;
+    }
+
+    .founder-photo {
+        width: 180px; /* Increased size for better visibility */
+        height: 180px; /* Increased size for better visibility */
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--primary);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .founder-photo:hover {
+        transform: scale(1.05);
+    }
+
+    .founder-name {
+        margin-top: 15px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    .founder-title {
+        font-size: 1.1rem;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .about-us-text {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.8;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+
+    /* Testimonials (kept for reference, but section commented out in HTML) */
     #testimonials .testimonial {
       max-width: 700px; margin: 0 auto;
       text-align: center; opacity: 0;
@@ -237,43 +324,6 @@
     }
 
     /* Footer */
-
-    /* footer {
-      background: var(--primary); color: var(--white);
-      padding: 40px 40px;
-    } */
-    /* .footer-cols {
-      display: block;
-      text-align: center; 
-      padding-bottom: 20px; 
-    } */
-    /* Keep your social-icons styles */
-    /* .footer-cols .social-icons {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;           
-      display: inline-block;   
-    } */
-    /* .footer-cols .social-icons li {
-      margin: 8px 0;
-    }
-    .footer-cols .social-icons li a {
-      display: inline-flex;
-      align-items: center;
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .footer-cols .social-icons li a i {
-      font-size: 1.25rem;
-      margin-right: 8px;
-    }
-    .footer-cols .social-icons li a:hover {
-      color: var(--light-blue);
-    } */
-    /* 1) Base footer styles                */
-    /* ------------------------------------- */
     .site-footer {
       background: var(--primary);
       color: var(--white);
@@ -290,7 +340,7 @@
     }
 
     /* ------------------------------------- */
-    /* 2) Top section: 3 columns            */
+    /* 2) Top section: 3 columns          */
     /* ------------------------------------- */
     .footer-top {
       display: flex;
@@ -340,7 +390,7 @@
     }
 
     /* ------------------------------------- */
-    /* 3) Divider + bottom row              */
+    /* 3) Divider + bottom row            */
     /* ------------------------------------- */
     .site-footer .footer-bottom {
       margin-top: 3rem;
@@ -371,7 +421,7 @@
     }
 
     /* ------------------------------------- */
-    /* 4) Responsive tweaks                  */
+    /* 4) Responsive tweaks               */
     /* ------------------------------------- */
     @media (max-width: 600px) {
       .footer-top {
@@ -401,7 +451,6 @@
         <a href="#home">Home</a>
         <a href="#diensten">Diensten</a>
         <a href="#waarom">Waarom Quickstep?</a>
-        <!-- <a href="#testimonials"></a> -->
         <a href="#over">Over Ons</a>
         <a href="#contact">Contact</a>
       </div>
@@ -419,63 +468,85 @@
 
   <section id="diensten">
     <div class="container" data-aos="fade-up">
-      <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Onze Diensten</h2>
+      <h2 class="section-title">Onze Diensten</h2>
       <div class="cards">
         <div class="card" data-aos="zoom-in">
-          <i class="fas fa-chart-line"></i>
-          <h3>AI Quickscan</h3>
-          <p>Door mee te lopen in uw bedrijf en interviews af te nemen brengen wij de belangrijkste bedrijfsprocessen in kaart, en bieden wij gerichte aanbevelingen voor AI-toepassingen.</p>
+          <i class="fas fa-search-dollar"></i> <h3>AI Quickscan</h3>
+          <p>Door mee te lopen in uw bedrijf en interviews af te nemen, brengen wij de belangrijkste bedrijfsprocessen in kaart en bieden wij gerichte aanbevelingen voor AI-toepassingen die échte waarde toevoegen.</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="100">
-          <i class="fas fa-robot"></i>
-          <h3>Implementatie en Advies</h3>
-          <p>Van plan naar praktijk: Quickstep AI ondersteunt je ook na de Quickscan. Wij adviseren en begeleiden je bij de implementatie van passende AI-oplossingen, óf wij realiseren deze volledig voor je.</p>
+          <i class="fas fa-cogs"></i> <h3>Implementatie en Advies</h3>
+          <p>Van plan naar praktijk: Quickstep AI ondersteunt u ook na de Quickscan. Wij adviseren en begeleiden u bij de implementatie van passende AI-oplossingen, óf wij realiseren deze volledig voor u, zodat u direct resultaat ziet.</p>
         </div>
-        <!-- <div class="card" data-aos="zoom-in" data-aos-delay="200">
-          <i class="fas fa-code"></i>
-          <h3>Custom AI Integrations</h3>
-          <p>Seamlessly integrate AI capabilities into your existing systems for a tailored, high-impact solution.</p>
-        </div> -->
       </div>
     </div>
   </section>
 
   <section id="waarom">
     <div class="container about-wrapper">
-      <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration", class="about-img" data-aos="fade-right">
+      <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="about-img" data-aos="fade-right">
       <div class="about-text" data-aos="fade-left">
         <h2>Waarom AI?</h2>
         <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
-        <p>Productiviteitsstijging, Omzetgroei, Kostenbesparing</p>
-        <h2>Waarom Quickstep AI?</h2>
-        <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als jij concrete voordelen ziet. Jouw succes is onze missie.</p>
-        <p>TOEGANKELIJK, RESULTAATGERICHT, TRANSPARANT</p>
+        <div class="key-benefits">
+            <div class="key-benefit-item">
+                <i class="fas fa-rocket"></i>
+                <span>Productiviteitsstijging</span>
+            </div>
+            <div class="key-benefit-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Omzetgroei</span>
+            </div>
+            <div class="key-benefit-item">
+                <i class="fas fa-coins"></i>
+                <span>Kostenbesparing</span>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px;">Waarom Quickstep AI?</h2>
+        <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
+        <div class="quickstep-values">
+            <div class="quickstep-value-item">
+                <i class="fas fa-handshake"></i>
+                <span>TOEGANKELIJK</span>
+            </div>
+            <div class="quickstep-value-item">
+                <i class="fas fa-bullseye"></i>
+                <span>RESULTAATGERICHT</span>
+            </div>
+            <div class="quickstep-value-item">
+                <i class="fas fa-lightbulb"></i>
+                <span>TRANSPARANT</span>
+            </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="over">
     <div class="container">
-      <p>Twee fotos van de founders als cirkels naast elkaar met de naam en functie (mede-oprichter) eronder. Onder deze fotos een kleine tekst waarin we ons een beetje voorstellen.</p>
-      <!-- <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Over Ons</h2>
-      <div class="testimonial" data-index="0">
-        <p>"Quickstep AI transformed how we operate—our productivity doubled in just 3 months."</p>
-        <div class="author">— Maria Lopez, COO of Inventix</div>
+      <h2 class="section-title">Over Ons</h2>
+      <div class="founders-container">
+        <div class="founder-card" data-aos="flip-left">
+          <img src="./images/stijn_diemel.jpg" alt="Stijn Diemel" class="founder-photo">
+          <div class="founder-name">Stijn Diemel</div>
+          <div class="founder-title">Mede-oprichter</div>
+        </div>
+        <div class="founder-card" data-aos="flip-right" data-aos-delay="150">
+          <img src="./images/joep_hillenaar.jpg" alt="Joep Hillenaar" class="founder-photo">
+          <div class="founder-name">Joep Hillenaar</div>
+          <div class="founder-title">Mede-oprichter</div>
+        </div>
       </div>
-      <div class="testimonial" data-index="1">
-        <p>"Their predictive analytics gave us insights we never knew existed."</p>
-        <div class="author">— John Smith, CEO of NovaCorp</div>
-      </div>
-      <div class="testimonial" data-index="2">
-        <p>"The team was professional and delivered beyond expectations."</p>
-        <div class="author">— Aisha Khan, Head of Ops at TechWave</div>
-      </div> -->
+      <p class="about-us-text" data-aos="fade-up">
+        Wij zijn Stijn Diemel en Joep Hillenaar, de gezichten achter Quickstep AI. Onze missie is om de kracht van kunstmatige intelligentie te ontsluiten voor het midden- en kleinbedrijf. We geloven sterk dat AI geen complexe en onbereikbare technologie hoeft te zijn, maar juist een praktisch instrument dat uw bedrijf significant kan verbeteren. Met onze gecombineerde expertise in AI en bedrijfsprocessen, zetten we ons in om tastbare resultaten te leveren en uw onderneming toekomstbestendig te maken. We kijken ernaar uit om u te helpen uw volgende grote stap te zetten met AI!
+      </p>
     </div>
   </section>
 
   <section id="contact">
     <div class="container" data-aos="fade-up">
-      <h2 class="section-title" style="text-align: center; margin-bottom: 60px;">Neem Contact Op</h2>
+      <h2 class="section-title">Neem Contact Op</h2>
       <div class="contact-wrapper">
         <form id="contactForm">
           <input type="text" name="from_name" placeholder="Naam" required>
@@ -554,46 +625,6 @@
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('nav .nav-links');
     menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-
-    // Counters animation
-    const counters = document.querySelectorAll('.counter h2');
-    const speed = 200;
-    const animateCounters = () => {
-      counters.forEach(counter => {
-        const updateCount = () => {
-          const target = +counter.getAttribute('data-target');
-          const count = +counter.innerText;
-          const increment = Math.ceil(target / speed);
-          if (count < target) {
-            counter.innerText = count + increment;
-            setTimeout(updateCount, 20);
-          } else {
-            counter.innerText = target;
-          }
-        };
-        updateCount();
-      });
-    };
-    let counted = false;
-    window.addEventListener('scroll', () => {
-      const aboutSection = document.getElementById('about');
-      if (!counted && window.scrollY > aboutSection.offsetTop - window.innerHeight/2) {
-        animateCounters(); counted = true;
-      }
-    });
-
-    // Testimonials carousel
-    const testimonials = document.querySelectorAll('#testimonials .testimonial');
-    let currentTestimonial = 0;
-    const showTestimonial = i => {
-      testimonials.forEach(t => t.classList.remove('active'));
-      testimonials[i].classList.add('active');
-    };
-    showTestimonial(0);
-    setInterval(() => {
-      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-      showTestimonial(currentTestimonial);
-    }, 5000);
 
     // EmailJS init
     emailjs.init('HlnYIoVp37HCcQnlM');
