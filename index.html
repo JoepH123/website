@@ -147,7 +147,7 @@
     }
 
 
-    /* Solutions */
+    /* Diensten */
     #diensten .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -173,48 +173,79 @@
     }
 
     /* Waarom Quickstep */
-    #waarom .about-wrapper {
-      display: flex; align-items: center;
-      gap: 40px; flex-wrap: wrap;
+    #waarom .content-wrapper { /* Renamed from about-wrapper to be more generic */
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center the content if space allows */
+      gap: 60px; /* Increased gap for more breathing room */
+      flex-wrap: wrap; /* Allows wrapping on smaller screens */
+      text-align: left; /* Default text alignment */
     }
-    #waarom .about-img {
-      max-height: 200px;
-      flex: 0 0 auto;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 12px;
-    }
-    #waarom .about-text { flex: 1; }
 
-    .key-benefits, .quickstep-values {
-        display: flex;
-        flex-wrap: wrap;
+    #waarom .text-content { /* New container for all text */
+        flex: 1;
+        min-width: 300px; /* Ensure text content doesn't get too narrow */
+        max-width: 700px; /* Max width for readability */
+    }
+
+    #waarom .illustration {
+        flex-shrink: 0; /* Prevent the image from shrinking */
+        width: 300px; /* Fixed width for the illustration */
+        height: auto;
+        border-radius: 12px; /* Keep existing border-radius */
+        object-fit: contain;
+        max-width: 100%; /* Ensure it's responsive */
+    }
+
+    #waarom .section-heading { /* New style for the sub-headings in this section */
+        font-size: 2rem; /* Slightly smaller than main section titles */
+        color: var(--primary);
+        margin-bottom: 20px;
+        text-align: left; /* Align to left within its container */
+    }
+
+    #waarom p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 25px; /* Spacing between paragraphs */
+        color: #555;
+    }
+
+    .benefits-grid, .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Auto-fit for responsiveness */
         gap: 20px;
-        margin-top: 20px;
-        justify-content: center; /* Center items for better appearance */
+        margin-top: 30px; /* Space above the grids */
+        margin-bottom: 40px; /* Space below the grids */
     }
 
-    .key-benefit-item, .quickstep-value-item {
+    .benefit-item, .value-item {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Slightly stronger shadow */
         display: flex;
+        flex-direction: column; /* Stack icon and text vertically */
         align-items: center;
-        gap: 10px;
+        text-align: center;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .benefit-item:hover, .value-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    }
+
+    .benefit-item i, .value-item i {
+        font-size: 2.2rem; /* Larger icons */
+        color: var(--primary);
+        margin-bottom: 15px; /* Space between icon and text */
+    }
+
+    .benefit-item span, .value-item span {
         font-size: 1.1rem;
         font-weight: 600;
         color: var(--dark);
-        background: var(--white);
-        padding: 10px 20px;
-        border-radius: 50px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        flex: 1 1 auto; /* Allow items to grow/shrink but maintain base width */
-        max-width: 300px; /* Limit max width for smaller items */
-        justify-content: center;
-        text-align: center;
-    }
-
-    .key-benefit-item i, .quickstep-value-item i {
-        color: var(--primary);
-        font-size: 1.5rem;
     }
 
     /* About Us / Over Ons */
@@ -241,7 +272,7 @@
         height: 180px; /* Increased size for better visibility */
         border-radius: 50%;
         object-fit: cover;
-        /* border: 5px solid var(--primary); */
+        border: 5px solid var(--primary);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease-in-out;
     }
@@ -423,13 +454,37 @@
     /* ------------------------------------- */
     /* 4) Responsive tweaks               */
     /* ------------------------------------- */
+    @media (max-width: 992px) { /* Adjust breakpoint for tablet */
+        #waarom .content-wrapper {
+            flex-direction: column;
+            text-align: center;
+        }
+        #waarom .text-content {
+            min-width: unset; /* Remove min-width to allow better scaling */
+            max-width: 100%;
+        }
+        #waarom .illustration {
+            width: 250px; /* Slightly smaller illustration on tablets */
+        }
+        #waarom .section-heading {
+            text-align: center; /* Center align headings on smaller screens */
+        }
+    }
+
     @media (max-width: 600px) {
       .footer-top {
         flex-direction: column;
       }
+
       .footer-bottom {
         flex-direction: column;
         text-align: center;
+      }
+      #waarom .illustration {
+            width: 200px; /* Even smaller illustration on mobile */
+      }
+      .benefits-grid, .values-grid {
+        grid-template-columns: 1fr; /* Stack items on mobile */
       }
     }
   </style>
@@ -470,11 +525,13 @@
       <h2 class="section-title">Onze Diensten</h2>
       <div class="cards">
         <div class="card" data-aos="zoom-in">
-          <i class="fas fa-search-dollar"></i> <h3>AI Quickscan</h3>
+          <i class="fas fa-search-dollar"></i>
+          <h3>AI Quickscan</h3>
           <p>Door mee te lopen in uw bedrijf en interviews af te nemen, brengen wij de belangrijkste bedrijfsprocessen in kaart en bieden wij gerichte aanbevelingen voor AI-toepassingen die échte waarde toevoegen.</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="100">
-          <i class="fas fa-cogs"></i> <h3>Implementatie en Advies</h3>
+          <i class="fas fa-cogs"></i>
+          <h3>Implementatie en Advies</h3>
           <p>Van plan naar praktijk: Quickstep AI ondersteunt u ook na de Quickscan. Wij adviseren en begeleiden u bij de implementatie van passende AI-oplossingen, óf wij realiseren deze volledig voor u, zodat u direct resultaat ziet.</p>
         </div>
       </div>
@@ -482,41 +539,43 @@
   </section>
 
   <section id="waarom">
-    <div class="container about-wrapper">
-      <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="about-img" data-aos="fade-right">
-      <div class="about-text" data-aos="fade-left">
-        <h2>Waarom AI?</h2>
-        <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
-        <div class="key-benefits">
-            <div class="key-benefit-item">
-                <i class="fas fa-rocket"></i>
-                <span>Productiviteitsstijging</span>
-            </div>
-            <div class="key-benefit-item">
-                <i class="fas fa-chart-line"></i>
-                <span>Omzetgroei</span>
-            </div>
-            <div class="key-benefit-item">
-                <i class="fas fa-coins"></i>
-                <span>Kostenbesparing</span>
-            </div>
-        </div>
+    <div class="container" data-aos="fade-up">
+      <h2 class="section-title">Waarom Quickstep AI?</h2> <div class="content-wrapper">
+        <img src="images/temp_logo_cropped.png" alt="Quickstep AI Illustration" class="illustration" data-aos="fade-right">
+        <div class="text-content" data-aos="fade-left">
+          <h3 class="section-heading">Waarom AI?</h3> <p>AI is niet langer een luxe, maar dé sleutel voor het MKB om concurrerend, efficiënt en toekomstbestendig te blijven.</p>
 
-        <h2 style="margin-top: 40px;">Waarom Quickstep AI?</h2>
-        <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
-        <div class="quickstep-values">
-            <div class="quickstep-value-item">
-                <i class="fas fa-handshake"></i>
-                <span>TOEGANKELIJK</span>
-            </div>
-            <div class="quickstep-value-item">
-                <i class="fas fa-bullseye"></i>
-                <span>RESULTAATGERICHT</span>
-            </div>
-            <div class="quickstep-value-item">
-                <i class="fas fa-lightbulb"></i>
-                <span>TRANSPARANT</span>
-            </div>
+          <div class="benefits-grid">
+              <div class="benefit-item">
+                  <i class="fas fa-rocket"></i>
+                  <span>Productiviteitsstijging</span>
+              </div>
+              <div class="benefit-item">
+                  <i class="fas fa-chart-line"></i>
+                  <span>Omzetgroei</span>
+              </div>
+              <div class="benefit-item">
+                  <i class="fas fa-coins"></i>
+                  <span>Kostenbesparing</span>
+              </div>
+          </div>
+
+          <h3 class="section-heading">Wat Maakt Quickstep AI Uniek?</h3> <p>Quickstep AI is ontstaan vanuit één overtuiging: AI moet toegankelijk zijn. Wij zijn een jong, gedreven team van AI-specialisten met ruime ervaring in het vertalen van complexe technologie naar praktische bedrijfsoplossingen. Ons doel is om AI toegankelijk te maken voor elk MKB-bedrijf dat zijn concurrentiepositie wil versterken zonder grote investeringen vooraf. Wij zijn pas tevreden als u concrete voordelen ziet. Uw succes is onze missie.</p>
+          
+          <div class="values-grid">
+              <div class="value-item">
+                  <i class="fas fa-handshake"></i>
+                  <span>TOEGANKELIJK</span>
+              </div>
+              <div class="value-item">
+                  <i class="fas fa-bullseye"></i>
+                  <span>RESULTAATGERICHT</span>
+              </div>
+              <div class="value-item">
+                  <i class="fas fa-lightbulb"></i>
+                  <span>TRANSPARANT</span>
+              </div>
+          </div>
         </div>
       </div>
     </div>
@@ -527,12 +586,12 @@
       <h2 class="section-title">Over Ons</h2>
       <div class="founders-container">
         <div class="founder-card" data-aos="flip-left">
-          <img src="./images/foto_stijn.jpg" alt="Stijn Diemel" class="founder-photo">
+          <img src="./images/stijn_diemel.jpg" alt="Stijn Diemel" class="founder-photo">
           <div class="founder-name">Stijn Diemel</div>
           <div class="founder-title">Mede-oprichter</div>
         </div>
         <div class="founder-card" data-aos="flip-right" data-aos-delay="150">
-          <img src="./images/foto_joep.jpg" alt="Joep Hillenaar" class="founder-photo">
+          <img src="./images/joep_hillenaar.jpg" alt="Joep Hillenaar" class="founder-photo">
           <div class="founder-name">Joep Hillenaar</div>
           <div class="founder-title">Mede-oprichter</div>
         </div>
