@@ -156,3 +156,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const section   = document.getElementById('waarom-horizontal');
+  const container = section.querySelector('.scrollable-content-window');
+  const wrapper   = section.querySelector('.horizontal-content-wrapper');
+  const panel     = wrapper.querySelector('.horizontal-panel');
+
+  let panelW, offset, sectionTop, totalScroll;
+
+  function recalc() {
+    panelW      = panel.getBoundingClientRect().width;
+    offset      = (container.clientWidth - panelW) / 2;
+    sectionTop  = section.offsetTop;
+    totalScroll = section.offsetHeight - window.innerHeight;
+    // initialize at load/resize
+    applyTransform(getScrollPct());
+  }
+
+  function getScrollPct() {
+    const scrollY = window.scrollY;
+    let pct = (scrollY - sectionTop) / totalScroll;
+    return Math.min(Math.max(pct, 0), 1);
+  }
+
+  function applyTransform(pct) {
+    // when pct=0 → translateX = +offset  (centers panel #1)
+    // when pct=1 → translateX = −panelW + offset  (centers panel #2)
+    const x = -pct * panelW + offset;
+    wrapper.style.transform = `translateX(${x}px)`;
+  }
+
+  // on scroll
+  window.addEventListener('scroll', () => {
+    applyTransform(getScrollPct());
+  });
+
+  // on resize
+  window.addEventListener('resize', recalc);
+
+  // kick it off
+  recalc();
+});
