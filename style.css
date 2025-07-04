@@ -552,6 +552,10 @@ section {
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
+    margin-left: auto;    /* ← push it all the way to the right */
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--white);
   }
   nav .nav-links {
     position: absolute;
