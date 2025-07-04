@@ -583,3 +583,82 @@ section {
     text-align: center;
   }
 }
+
+/* --- RESPONSIVE HEADER: Make sure it looks good on phone as well --- */
+@media (max-width: 768px) {
+  /* Reduce header padding on mobile */
+  header {
+    padding: 8px 20px;
+  }
+  
+  /* Scale down logo elements */
+  .logo-img {
+    height: 45px; /* Reduced from 70px */
+    width: auto;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem; /* Reduced from 1.35rem */
+    font-weight: 600;
+  }
+  
+  /* Adjust menu toggle */
+  .menu-toggle {
+    font-size: 1.3rem; /* Slightly smaller */
+  }
+  
+  /* Fix nav links positioning */
+  nav .nav-links {
+    top: 60px; /* Adjusted to match smaller header */
+    right: 20px;
+    width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Even smaller screens */
+  header {
+    padding: 6px 15px;
+  }
+  
+  .logo-img {
+    height: 40px;
+  }
+  
+  .logo-text {
+    font-size: 1rem;
+  }
+  
+  .menu-toggle {
+    font-size: 1.2rem;
+  }
+  
+  /* Adjust hero content for smaller screens */
+  .hero-content h1 {
+    font-size: 2rem; /* Reduced from 3rem */
+    line-height: 1.2;
+  }
+  
+  .hero-content p {
+    font-size: 1rem; /* Reduced from 1.2rem */
+  }
+  
+  /* Make buttons stack vertically on very small screens */
+  .hero-content .btn {
+    display: block;
+    margin: 10px auto;
+    width: fit-content;
+  }
+  
+  /* Adjust section padding */
+  section {
+    padding: 50px 20px;
+  }
+  
+  /* Adjust section titles */
+  .section-title {
+    font-size: 2rem;
+  }
+}
